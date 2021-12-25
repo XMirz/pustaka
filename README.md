@@ -16,14 +16,14 @@ Prasyarat :
 
 -   php
 -   composer
--   npn(NodeJS)
+-   npm(NodeJS)
 
 Langkah-langkah :
 
 1. Clone repo ini
 
     ```
-    git clone https://github.com/XMirz/pustaka
+    git clone https://github.com/XMirz/pustaka.git
     ```
 
 1. Masukkan ke directory repo yang telah diclone
@@ -40,8 +40,26 @@ Langkah-langkah :
     npm run dev
     ```
 
+1. Copy file .env.example, lalu ganti nama menjadi .env saja
+1. Buat database baru pada mysql, berikut commandnya jika melalui commandline atau terminal
+
+    ```
+    mysql -u root
+    CREATE DATEBASE pustaka;
+    exit;
+    ```
+
+1. Jalankan migrasi database
+    ```
+    php artisan migrate:fresh --seed
+    ```
 1. Jalankan pada local server
 
     ```
     php artisan serve
     ```
+
+1. Silahkan login
+
+    email = `x@x.com`
+    password = `x`
