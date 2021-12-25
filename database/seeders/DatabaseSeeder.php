@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $staff = new User();
-        $staff->
+        $staff->name = 'Hafez Almirza';
+        $staff->username = 'xmirz';
+        $staff->email = "x@x.com";
+        $staff->password = Hash::make('x');
+        $staff->save();
     }
 }
