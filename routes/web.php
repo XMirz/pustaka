@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,7 @@ Route::get('/', function () {
 });
 
 Route::group(["middleware" => "auth"], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('books', BookController::class);
     Route::resource('borrowings', BorrowingController::class);
 });

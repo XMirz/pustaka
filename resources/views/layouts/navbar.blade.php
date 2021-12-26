@@ -1,4 +1,4 @@
-<div class="relative bg-white w-full inset-x-0 text-gray-800  py-4 px-6 shadow-md-b">
+<div class="relative bg-white w-full h-14 inset-x-0 text-gray-800  py-4 px-6 shadow-md-b">
   <div class=" flex flex-row-reverse">
     <div id="profile" class=" flex flex-row items-center space-x-2">
       <div class="">

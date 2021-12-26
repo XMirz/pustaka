@@ -23,8 +23,8 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
-<body class="font-sans text-gray-600 antialiased">
-    <div class="min-h-screen bg-gray-100 flex flex-row">
+<body class="font-sans text-gray-600 antialiased h-screen overflow-hidden">
+    <div class="bg-gray-100 flex flex-row">
         {{-- @include('layouts.navigation') --}}
 
         <!-- Page Heading -->
@@ -38,10 +38,10 @@
 
         @include('layouts.sidebar')
 
-        <div class="flex-1">
+        <div class="flex-1 h-screen">
             @include('layouts.navbar')
 
-            <main class="relative px-8 space-y-6">
+            <main class="relative h-[calc(100vh-56px)] px-8 space-y-6 pb-8 overflow-y-auto">
                 <div class="pt-8">
                     <h1 class="font-bold text-gray-700 text-3xl">{{$title ?? ''}}</h1>
                 </div>

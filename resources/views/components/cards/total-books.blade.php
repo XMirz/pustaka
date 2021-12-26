@@ -12,7 +12,7 @@
         <span class="text-3xl group-hover:text-blue-600 transition-all">{{$totalTitle}}</span> Judul
       </h3>
       <h4 class="text-md mt-auto mb-0.5 ">
-        <span class=" group-hover:text-blue-600 transition-all">{{$totalTitle}}</span> Jumlah
+        <span class=" group-hover:text-blue-600 transition-all">{{$totalBooks}}</span> Jumlah
         Buku
       </h4>
     </div>

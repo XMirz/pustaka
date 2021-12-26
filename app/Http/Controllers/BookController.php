@@ -14,7 +14,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books.index');
+        $books = Book::all();
+        $totalTitle = $books->count();
+        $totalBooks = $books->sum('amount');
+        return view('books.index', compact('books', 'totalTitle', 'totalBooks'));
     }
 
     /**
@@ -24,7 +27,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
