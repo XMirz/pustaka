@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::group(["middleware" => "auth"], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard.index');
+    Route::resource('books', BookController::class);
+    Route::resource('borrowings', BorrowingController::class);
+});
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
