@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\Category;
+use App\Models\Publisher;
 use Illuminate\Database\Seeder;
 
 class BooksSeeder extends Seeder
@@ -13,6 +17,34 @@ class BooksSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // Category
+        $name = ["Bahasa Indonesia", "Matematika", "Bahasa Inggris"];
+        $code = ["BI", "MT", "EN"];
+        for ($i = 0; $i < count($name); $i++) {
+            $cat = new Category();
+            $cat->name = $name[$i];
+            $cat->category_code = $code[$i];
+            $cat->save();
+        }
+
+        Author::create([
+            'name' => 'Antonio Valencia'
+        ]);
+        Author::create([
+            'name' => 'Louis Frank',
+            'description' => 'Anu'
+        ]);
+        Publisher::create([
+            'name' => 'Gramedia',
+            'description' => 'Number 1',
+            'address' => 'Jakarta'
+        ]);
+        Publisher::create([
+            'name' => 'XMirz',
+            'description' => 'Anjay Mabar',
+            'address' => 'Bandung'
+        ]);
+
+        Book::factory(11)->create();
     }
 }

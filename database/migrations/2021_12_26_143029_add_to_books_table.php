@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuthorsTable extends Migration
+class AddToBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateAuthorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('authors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->timestamps();
+        Schema::table('books', function (Blueprint $table) {
+            $table->foreignId('author_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('publisher_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -28,6 +26,8 @@ class CreateAuthorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('author');
+        Schema::table('books', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $staff->email = "x@x.com";
         $staff->password = Hash::make('x');
         $staff->save();
+
+        $this->call([BooksSeeder::class]);
     }
 }
