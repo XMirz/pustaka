@@ -15,6 +15,7 @@
             <table class="w-full">
                 <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
                     <tr class="">
+                        <th class="px-0 pb-3">#</th>
                         <th class="px-4 py-3">Judul</th>
                         <th class="px-4 py-3">Kode buku</th>
                         <th class="px-4 py-3">ISBN</th>
@@ -25,9 +26,10 @@
                         <th class="px-4 py-3"></th>
                     </tr>
                 </thead>
-                <tbody class="text-lg">
+                <tbody class="text-lg w-full">
                     @foreach ($books as $book)
-                    <tr class="hover:bg-gray-50 border-b">
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
                         <td class="px-4 py-3">{{$book->title}}</td>
                         <td class="px-4 py-3">{{$book->book_code}}</td>
                         <td class="px-4 py-3">{{$book->isbn}}</td>

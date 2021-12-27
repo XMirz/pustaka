@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -27,7 +29,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $categories = Category::all();
+        return view('books.create', compact('categories'));
     }
 
     /**
@@ -38,7 +41,8 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $a = Publisher::where('name', '=', $request->get('Gramedia'))->get();
+        ddd($a);
     }
 
     /**
