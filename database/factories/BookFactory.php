@@ -24,6 +24,7 @@ class BookFactory extends Factory
             'published_at' => $this->faker->city(),
             'exemplar' => Arr::first(Arr::shuffle([202, 40024, 321])),
             'amount' => Arr::first(Arr::shuffle([12, 23, 31, 4, 55])),
+            'category_id' => Arr::first(Arr::shuffle([1, 2, 3])),
             'author_id' => Arr::first(Arr::shuffle([1, 2])),
             'publisher_id' => Arr::first(Arr::shuffle([1, 2])),
         ];

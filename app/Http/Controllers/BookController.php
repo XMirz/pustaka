@@ -60,8 +60,10 @@ class BookController extends Controller
 
         // Ambil semua input user dan masukkan ke variabel
         $book = request()->all();
+        // Hapus input publisher dan author karena kita hanya butuh id
         unset($book['publisher']);
         unset($book['author']);
+        // Tambah id penerbit dan id penulis ke author
         $book['publisher_id'] = $publisherId;
         $book['author_id'] = $authorId;
         Book::create($book); // Simpan ke database

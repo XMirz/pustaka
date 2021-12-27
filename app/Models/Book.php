@@ -13,6 +13,10 @@ class Book extends Model
     // Eager load relationship
     protected $with = ["author", "publisher"];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
     public function author()
     {
         return $this->belongsTo(Author::class);
