@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Publisher extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
     // Assign Relationship
     public function book()
     {

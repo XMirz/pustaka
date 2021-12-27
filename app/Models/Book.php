@@ -9,6 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
     // Eager load relationship
     protected $with = ["author", "publisher"];
 

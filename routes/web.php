@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Publisher;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,4 @@ Route::group(["middleware" => "auth"], function () {
 
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/ajax.php';

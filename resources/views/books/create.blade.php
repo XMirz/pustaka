@@ -54,11 +54,11 @@
               <x-input id="published_at" name="published_at" type="text" placeholder="Alamat"
                 :value="old('published_at')" required autofocus />
             </div>
-            {{-- <div class="flex flex-col space-y-2">
-              <x-label for="publi" :value="__('Penulis')" />
-              <x-input id="author" name="author" type="text" placeholder="Penulis" :value="old('author')" required
-                autofocus />
-            </div> --}}
+            <div class="flex flex-col space-y-2">
+              <x-label for="publication_year" :value="__('Tahun terbit')" />
+              <x-input id="publication_year" name="publication_year" type="number" placeholder="Tahun"
+                :value="old('publication_year')" required autofocus />
+            </div>
           </div>
           {{-- Form Kanan --}}
           <div class="flex-1 flex flex-col space-y-4">
@@ -77,9 +77,9 @@
                 autofocus />
             </div>
             <div class="flex flex-col space-y-2">
-              <x-label for="publication_year" :value="__('Tahun terbit')" />
-              <x-input id="publication_year" name="publication_year" type="number" placeholder="Tahun"
-                :value="old('publication_year')" required autofocus />
+              <x-label for="exemplar" :value="__('Jumlah halaman')" />
+              <x-input id="exemplar" name="exemplar" type="number" placeholder="Halaman" :value="old('exemplar')"
+                required autofocus />
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="amount" :value="__('Jumlah buku')" />

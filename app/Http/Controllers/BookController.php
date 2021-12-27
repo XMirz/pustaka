@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
@@ -41,8 +42,30 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $a = Publisher::where('name', '=', $request->get('Gramedia'))->get();
-        ddd($a);
+        // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
+        if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
+            Publisher::create([
+                'name' =>  $request->get('publisher')
+            ]);
+        }
+        // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel authors
+        if (!Author::firstWhere('name', '=', $request->get('author'))) {
+            Author::create([
+                'name' =>  $request->get('author')
+            ]);
+        }
+        // Ambil id penulis dan penerbit
+        $publisherId = Publisher::select('id')->firstWhere('name', '=', $request->get('publisher'))->id;
+        $authorId = Author::select('id')->firstWhere('name', '=', $request->get('author'))->id;
+
+        // Ambil semua input user dan masukkan ke variabel
+        $book = request()->all();
+        unset($book['publisher']);
+        unset($book['author']);
+        $book['publisher_id'] = $publisherId;
+        $book['author_id'] = $authorId;
+        Book::create($book); // Simpan ke database
+        return redirect()->route('books.index');
     }
 
     /**
