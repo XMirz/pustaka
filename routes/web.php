@@ -25,6 +25,7 @@ Route::group(["middleware" => "auth"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('books', BookController::class);
     Route::resource('borrowings', BorrowingController::class);
+    Route::resource('members', BorrowingController::class);
 });
 
 

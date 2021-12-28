@@ -4,7 +4,8 @@
   </x-section-header>
   <x-section-card class="">
     <div class="">
-      <form action="{{route('books.store')}}" method="POST">
+      <form action="{{route('books.update', ['book' => $book])}}" method="POST">
+        @method('PUT')
         <h4 class="text-xl">Rincian buku</h4>
         <div class="flex flex-row space-x-8 my-4">
           {{-- Form Kiri --}}
@@ -13,18 +14,18 @@
               <x-label for="category_id" :value="__('Kategori')" />
 
               {{-- Custom Select Dropdowm --}}
-              <input type="hidden" id="category_id" name="category_id" x-model="currentId" />
               <div class="relative">
+                <input type="hidden" id="category_id" name="category_id" x-model="currentId" />
                 <button type="button" x-on:click="open=true"
                   class="relative  text-left w-full px-3 py-[9px] ring-1 ring-gray-300 hover:ring-blue-500  focus:ring-2 focus:ring-blue-500 rounded-md transition"
                   x-text="current">
                 </button>
                 <div @click.outside="open = false"
-                  class="absolute z-10 top-11 right-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
+                  class="absolute z-10 top-11 left-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
                   x-show="open">
                   <ul class="">
                     @foreach ($categories as $cat)
-                    <li class="px-3 py-2  hover:bg-gray-100 cursor-pointer"
+                    <li class="px-3 py-2  hover:bg-gray-100 cursor-pointer "
                       x-on:click="select('{{$cat->name}}', '{{$cat->id}}')">
                       {{$cat->name}}
                     </li>
@@ -118,8 +119,8 @@
       document.addEventListener('alpine:init',()=>{
         Alpine.data('category', () => ({
           open : false,
-          current : 'Pilih kategori',
-          currentId : '',
+          current : '{{old('category_id', $book->category->name)}}',
+          currentId : '{{old('category_id', $book->category_id)}}',
           select(selected, selectedId){
             this.open = false;
             this.current =selected;
@@ -129,8 +130,6 @@
       });
       function inputSelect(name) {
         return {
-          
-          // old : ["{{old('author' , $book->author->name)}}","{{old('author' , $book->publisher->name)}}"],
           [name]: '',
           initialize(value){
             this[name] = value

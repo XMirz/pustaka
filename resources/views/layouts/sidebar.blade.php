@@ -9,11 +9,13 @@
           <x-icons.dashboard></x-icons.dashboard>
         </x-nav-item>
         <x-nav-item title="Buku" isActive="{{Request::is('books*')}}" link="{{ route('books.index') }}">
-          <x-icons.books></x-icons.books>
+          <x-icons.books />
         </x-nav-item>
-        <x-nav-item title="Peminjaman" isActive="{{Request::is('dashboard/borrowings*')}}"
-          link="{{ route('borrowings.index',)}}">
-          <x-icons.transaction></x-icons.transaction>
+        <x-nav-item title="Peminjaman" isActive="{{Request::is('borrowings*')}}" link="{{ route('borrowings.index',)}}">
+          <x-icons.transaction />
+        </x-nav-item>
+        <x-nav-item title="Anggota" isActive="{{Request::is('members*')}}" link="{{ route('members.index',)}}">
+          <x-icons.people />
         </x-nav-item>
       </ul>
     </div>

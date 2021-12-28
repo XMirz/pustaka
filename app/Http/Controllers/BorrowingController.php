@@ -14,7 +14,10 @@ class BorrowingController extends Controller
      */
     public function index()
     {
-        return view('borrowings.index');
+        $borrowings = Borrowing::where('status', '=', "NOT_RETURNED");
+        $totalBorrowedTitle = $borrowings->count();
+        $totalBorrowedBooks = $borrowings->sum('amount');
+        return view('borrowings.index', compact('totalBorrowedTitle', 'totalBorrowedBooks'));
     }
 
     /**

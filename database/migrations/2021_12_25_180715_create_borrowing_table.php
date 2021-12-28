@@ -17,7 +17,7 @@ class CreateBorrowingTable extends Migration
             $table->id();
             $table->integer('amount')->unsigned();
             $table->date('return_date');
-            $table->string('status');
+            $table->enum('status', ["NOT_RETURNED", "RETURNED", "LOST"]);
             $table->timestamps();
             $table->foreignId('book_id')->constrained('books')->restrictOnDelete()->restrictOnUpdate();
             $table->foreignId('member_id')->constrained('members')->restrictOnDelete()->restrictOnUpdate();

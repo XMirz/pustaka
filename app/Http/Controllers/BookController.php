@@ -102,7 +102,32 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
+        if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
+            Publisher::create([
+                'name' =>  $request->get('publisher')
+            ]);
+        }
+        // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel authors
+        if (!Author::firstWhere('name', '=', $request->get('author'))) {
+            Author::create([
+                'name' =>  $request->get('author')
+            ]);
+        }
+        // Ambil id penulis dan penerbit
+        $publisherId = Publisher::select('id')->firstWhere('name', '=', $request->get('publisher'))->id;
+        $authorId = Author::select('id')->firstWhere('name', '=', $request->get('author'))->id;
+
+        // Ambil semua input user dan masukkan ke variabel
+        $updateRequest = request()->all();
+        // Hapus input publisher dan author karena kita hanya butuh id
+        unset($updateRequest['publisher']);
+        unset($updateRequest['author']);
+        // Tambah id penerbit dan id penulis ke author
+        $updateRequest['publisher_id'] = $publisherId;
+        $updateRequest['author_id'] = $authorId;
+        $book->update($updateRequest); // Simpan ke database
+        return redirect()->route('books.index');
     }
 
     /**
