@@ -13,14 +13,14 @@ class CreateBorrowingTable extends Migration
      */
     public function up()
     {
-        Schema::create('borrowing', function (Blueprint $table) {
+        Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
             $table->integer('amount')->unsigned();
             $table->date('return_date');
             $table->string('status');
             $table->timestamps();
             $table->foreignId('book_id')->constrained('books')->restrictOnDelete()->restrictOnUpdate();
-            $table->foreignId('borrower_id')->constrained('borrowers')->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('member_id')->constrained('members')->restrictOnDelete()->restrictOnUpdate();
         });
     }
 
@@ -31,6 +31,6 @@ class CreateBorrowingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('borrowing');
+        Schema::dropIfExists('borrowings');
     }
 }

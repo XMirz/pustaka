@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
         $staff->save();
 
         $this->call([BooksSeeder::class]);
+        $this->call([MembersSeeder::class]);
+        $this->call([BorrowingsSeeder::class]);
     }
 }
