@@ -15,12 +15,6 @@ class MembersSeeder extends Seeder
      */
     public function run()
     {
-        Student::factory(10)->create();
-        $students = Student::select(['id'])->get();
-        foreach ($students as $s) {
-            Member::create([
-                'student_id' => $s->id
-            ]);
-        }
+        Member::factory(10)->create();
     }
 }

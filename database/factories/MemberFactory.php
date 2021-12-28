@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 
-class StudentFactory extends Factory
+class MemberFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,9 +16,10 @@ class StudentFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'role' => Arr::first(Arr::shuffle(["STUDENT", "TEACHER", "STAFF"])),
             'nisn' => $this->faker->isbn13(),
             'gender' => Arr::first(Arr::shuffle(['M', 'F'])),
-            'address' => $this->faker->address()
+            'address' => $this->faker->address(),
         ];
     }
 }

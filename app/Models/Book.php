@@ -11,7 +11,7 @@ class Book extends Model
 
     protected $guarded = ['id'];
     // Eager load relationship
-    protected $with = ["author", "publisher"];
+    protected $with = ["category", "author", "publisher", "stock"];
 
     public function stock()
     {

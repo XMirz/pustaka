@@ -11,25 +11,25 @@ class CreateTeachersTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('teachers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('nip');
-            $table->enum('gender', ['M', 'F']);
-            $table->string('address');
-            $table->timestamps();
-        });
-    }
+    // public function up()
+    // {
+    //     Schema::create('teachers', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('name');
+    //         $table->string('nip');
+    //         $table->enum('gender', ['M', 'F']);
+    //         $table->string('address');
+    //         $table->timestamps();
+    //     });
+    // }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('teachers');
-    }
+    // /**
+    //  * Reverse the migrations.
+    //  *
+    //  * @return void
+    //  */
+    // public function down()
+    // {
+    //     Schema::dropIfExists('teachers');
+    // }
 }

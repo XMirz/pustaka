@@ -15,11 +15,13 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->enum('role', ["STUDENT", "TEACHER", "STAFF"]);
+            $table->string('nisn')->nullable();
+            $table->string('nip')->nullable();
+            $table->enum('gender', ['M', 'F']);
+            $table->string('address');
             $table->timestamps();
-
-            $table->foreignId('student_id')->nullable()->constrained('students');
-            $table->foreignId('teacher_id')->nullable()->constrained('teachers');
-            $table->foreignId('staff_id')->nullable()->constrained('staffs');
         });
     }
 

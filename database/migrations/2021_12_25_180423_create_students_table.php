@@ -11,25 +11,25 @@ class CreateStudentsTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('nisn');
-            $table->enum('gender', ['M', 'F']);
-            $table->string('address');
-            $table->timestamps();
-        });
-    }
+    // public function up()
+    // {
+    //     Schema::create('students', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('name');
+    //         $table->string('nisn');
+    //         $table->enum('gender', ['M', 'F']);
+    //         $table->string('address');
+    //         $table->timestamps();
+    //     });
+    // }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('students');
-    }
+    // /**
+    //  * Reverse the migrations.
+    //  *
+    //  * @return void
+    //  */
+    // public function down()
+    // {
+    //     Schema::dropIfExists('students');
+    // }
 }
