@@ -17,7 +17,7 @@ class BookFactory extends Factory
     {
         return [
             'book_code' => Str::random(8),
-            'isbn' => Str::random(16),
+            'isbn' => $this->faker->isbn13(),
             'title' => Str::title($this->faker->words(3, true)),
             'edition' => Arr::first(Arr::shuffle([1, 2, 3, 4])),
             'publication_year' => Arr::first(Arr::shuffle([2001, 2002, 2014, 2015])),

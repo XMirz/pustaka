@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
+use App\Models\Stock;
 use Illuminate\Database\Seeder;
 
 class BooksSeeder extends Seeder
@@ -45,6 +46,13 @@ class BooksSeeder extends Seeder
             'address' => 'Bandung'
         ]);
 
-        Book::factory(11)->create();
+        Book::factory(10)->create();
+        $books = Book::select(['id', 'amount'])->get();
+        foreach ($books as $b) {
+            Stock::create([
+                'stock' => $b->amount,
+                'book_id' => $b->id
+            ]);
+        }
     }
 }

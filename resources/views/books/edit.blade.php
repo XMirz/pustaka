@@ -1,6 +1,6 @@
 <x-dashboard-layout>
   <x-slot name="title">Buku</x-slot>
-  <x-section-header title="Tambah Buku">
+  <x-section-header title="Perbarui Data Buku">
   </x-section-header>
   <x-section-card class="">
     <div class="">
@@ -15,7 +15,7 @@
               {{-- Custom Select Dropdowm --}}
               <input type="hidden" id="category_id" name="category_id" x-model="currentId" />
               <div class="relative">
-                <button type="button" @click="open=true"
+                <button type="button" x-on:click="open=true"
                   class="relative  text-left w-full px-3 py-[9px] ring-1 ring-gray-300 hover:ring-blue-500  focus:ring-2 focus:ring-blue-500 rounded-md transition"
                   x-text="current">
                 </button>
@@ -36,15 +36,15 @@
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="title" :value="__('Judul buku')" />
-              <x-input id="title" name="title" type="text" placeholder="Judul" :value="old('title')" required
-                autofocus />
+              <x-input id="title" name="title" type="text" placeholder="Judul" :value="old('title', $book->title)"
+                required autofocus />
             </div>
 
             <div class="relative flex flex-col space-y-2" x-data="inputSelect('author')">
               <x-label for="author" :value="__('Penulis')" />
-              <x-input id="author" name="author" type="text" placeholder="Penulis" :value="old('author')" required
-                autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.500="onChange()"
-                x-model="author" />
+              <x-input id="author" name="author" type="text" placeholder="Penulis" required autofocus autocomplete="off"
+                x-on:keyup="open = false" x-on:keyup.debounce.500="onChange()" x-model="author"
+                x-init="initialize('{{old('author' , $book->author->name)}}')" />
               {{-- Untuk dropdown penulis --}}
               <div @click.outside="open = false"
                 class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
@@ -57,7 +57,7 @@
               <x-label for="publisher" :value="__('Penerbit')" />
               <x-input id="publisher" name="publisher" type="text" placeholder="Penerbit" :value="old('publisher')"
                 required autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
-                x-model="publisher" />
+                x-model="publisher" x-init="initialize('{{old('publisher' , $book->publisher->name)}}')" />
               {{-- Untuk dropdown penerbit --}}
               <div @click.outside="open = false"
                 class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
@@ -69,39 +69,40 @@
             <div class="flex flex-col space-y-2">
               <x-label for="published_at" :value="__('Kota terbit')" />
               <x-input id="published_at" name="published_at" type="text" placeholder="Alamat"
-                :value="old('published_at')" required autofocus />
+                :value="old('published_at', $book->published_at )" required autofocus />
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="publication_year" :value="__('Tahun terbit')" />
               <x-input id="publication_year" name="publication_year" type="number" placeholder="Tahun"
-                :value="old('publication_year')" required autofocus />
+                :value="old('publication_year', $book->publication_year)" required autofocus />
             </div>
           </div>
           {{-- Form Kanan --}}
           <div class="flex-1 flex flex-col space-y-4">
             <div class="flex flex-col space-y-2">
               <x-label for="book_code" :value="__('Kode buku')" />
-              <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
-                autofocus />
+              <x-input id="book_code" name="book_code" type="text" placeholder="Kode"
+                :value="old('book_code', $book->book_code)" required autofocus />
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="isbn" :value="__('ISBN')" />
-              <x-input id="isbn" name="isbn" type="text" placeholder="ISBN" :value="old('isbn')" required autofocus />
+              <x-input id="isbn" name="isbn" type="text" placeholder="ISBN" :value="old('isbn', $book->isbn)" required
+                autofocus />
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="edition" :value="__('Edisi')" />
-              <x-input id="edition" name="edition" type="text" placeholder="Edisi" :value="old('edition')" required
-                autofocus />
+              <x-input id="edition" name="edition" type="text" placeholder="Edisi"
+                :value="old('edition', $book->edition)" required autofocus />
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="exemplar" :value="__('Jumlah halaman')" />
-              <x-input id="exemplar" name="exemplar" type="number" placeholder="Halaman" :value="old('exemplar')"
-                required autofocus />
+              <x-input id="exemplar" name="exemplar" type="number" placeholder="Halaman"
+                :value="old('exemplar', $book->exemplar)" required autofocus />
             </div>
             <div class="flex flex-col space-y-2">
               <x-label for="amount" :value="__('Jumlah buku')" />
-              <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
-                autofocus />
+              <x-input id="amount" name="amount" type="number" placeholder="Jumlah"
+                :value="old('amount', $book->amount)" required autofocus />
             </div>
           </div>
         </div>
@@ -128,7 +129,12 @@
       });
       function inputSelect(name) {
         return {
+          
+          // old : ["{{old('author' , $book->author->name)}}","{{old('author' , $book->publisher->name)}}"],
           [name]: '',
+          initialize(value){
+            this[name] = value
+          },
           open: false,
           list: '',
           select(selectedInput){

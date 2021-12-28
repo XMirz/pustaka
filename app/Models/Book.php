@@ -13,6 +13,10 @@ class Book extends Model
     // Eager load relationship
     protected $with = ["author", "publisher"];
 
+    public function stock()
+    {
+        return $this->hasOne(Stock::class);
+    }
     public function category()
     {
         return $this->belongsTo(Category::class);

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('root');
 
 Route::group(["middleware" => "auth"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
