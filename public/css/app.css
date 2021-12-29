@@ -665,6 +665,9 @@ select {
 .z-20 {
   z-index: 20;
 }
+.m-0 {
+  margin: 0px;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -672,6 +675,10 @@ select {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .ml-3 {
   margin-left: 0.75rem;
@@ -781,6 +788,9 @@ select {
 .h-\[calc\(100vh-56px\)\] {
   height: calc(100vh - 56px);
 }
+.h-0 {
+  height: 0px;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -831,6 +841,9 @@ select {
 }
 .w-80 {
   width: 20rem;
+}
+.w-0 {
+  width: 0px;
 }
 .min-w-full {
   min-width: 100%;
@@ -1107,6 +1120,9 @@ select {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-0 {
+  padding: 0px;
 }
 .px-4 {
   padding-left: 1rem;

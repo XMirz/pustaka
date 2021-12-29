@@ -16,7 +16,7 @@ class CreateMembersTable extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('role', ["STUDENT", "TEACHER", "STAFF"]);
+            $table->enum('role', ["Siswa", "Guru", "Karyawan"]);
             $table->string('nisn')->nullable();
             $table->string('nip')->nullable();
             $table->enum('gender', ['M', 'F']);

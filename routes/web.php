@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MemberController;
 use App\Models\Publisher;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ Route::group(["middleware" => "auth"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('books', BookController::class);
     Route::resource('borrowings', BorrowingController::class);
-    Route::resource('members', BorrowingController::class);
+    Route::resource('members', MemberController::class);
 });
 
 
