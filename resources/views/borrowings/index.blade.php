@@ -1,17 +1,21 @@
 <x-dashboard-layout>
+  <x-slot name="head">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+  </x-slot>
+
   <x-slot name="title">Peminjaman</x-slot>
   <div class="flex flex-row space-x-8">
     <x-cards.total-borrowings totalBorrowedTitle="{{$totalBorrowedTitle ?? 0}}"
       totalBorrowedBooks="{{$totalBorrowedBooks ?? 0}}" />
   </div>
-  <x-section-header title="Peminjaman Buku">
-    <div class="flex flex-row justify-around items-center">
-      {{-- <x-button-link title="Tambah" link="{{ route('borrowings.create') }}">
-        <x-icons.plus size="5" />
-      </x-button-link> --}}
-    </div>
-  </x-section-header>
-  <x-section-card class="">
+  <x-section-card>
+    <x-section-header title="Peminjaman baru">
+      <div class="flex flex-row justify-around items-center">
+        {{-- <x-button-link title="Tambah" link="{{ route('borrowings.create') }}">
+          <x-icons.plus size="5" />
+        </x-button-link> --}}
+      </div>
+    </x-section-header>
     <form action="{{route('borrowings.store')}}" method="post">
       <div class="w-full flex flex-row space-x-8 ">
         <div class="relative flex flex-col space-y-2" x-data="bookcodes()">
@@ -49,6 +53,7 @@
         <div class="flex flex-col space-y-2">
           <x-label for="return_date" :value="__('Tanggal Pengembalian')" />
           <x-input id="return_date" name="return_date" type="date" :value="old('return_date')" required autofocus />
+          <x-validation-error field="return_date" />
         </div>
         <div class="flex flex-col space-y-2">
           <x-label for="amount" :value="__('Jumlah buku')" />
@@ -67,8 +72,14 @@
       </div>
     </form>
   </x-section-card>
-
   <x-section-card class="">
+    <x-section-header title="Peminjaman berlangsung">
+      <div class="flex flex-row justify-around items-center">
+        {{-- <x-button-link title="Tambah" link="{{ route('borrowings.create') }}">
+          <x-icons.plus size="5" />
+        </x-button-link> --}}
+      </div>
+    </x-section-header>
     <div class="overflow-x-auto">
       <table class="w-full">
         <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
@@ -87,16 +98,20 @@
         </thead>
         <tbody class="text-lg w-full">
           @foreach ($borrowings as $b)
-          <tr class="hover:bg-gray-100">
+          <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
             <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
             <td class="px-4 py-3">{{$b->book->title}}</td>
             <td class="px-4 py-3">{{$b->book->book_code}}</td>
             <td class="px-4 py-3">{{$b->member->name}}</td>
             <td class="px-4 py-3">{{$b->amount}}</td>
-            <td class="px-4 py-3">{{$b->created_at}}</td>
-            <td class="px-4 py-3">{{$b->return_date}}</td>
+            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->return_date))}}</td>
             <td class="px-4 py-3">
-              <div class="flex flex-row justify-center items-center">
+              <div class="flex flex-row justify-center items-center space-x-2">
+                <x-button class="px-[6px] py-[6px] bg-green-500"
+                  onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
+                  <x-icons.check size="5" />
+                </x-button>
                 <x-button-link class="px-[6px] py-[6px]" link="{{ route('borrowings.edit', ['borrowing' => $b->id]) }}">
                   <x-icons.edit size="5" />
                 </x-button-link>
@@ -108,6 +123,21 @@
       </table>
     </div>
   </x-section-card>
+
+  {{-- <x-slot name="modal">
+    <div class="absolute inset-0 z-20 h-screen w-screen bg-black bg-opacity-50 flex items-center justify-center">
+      <div class=" w-1/2 p-8 bg-white rounded-2xl flex-flex">
+
+      </div>
+    </div>
+  </x-slot> --}}
+
+
+
+
+
+
+
   <x-slot name="script">
     <script>
       function bookcodes() {
@@ -123,8 +153,8 @@
             this.bookcode = selectedInput
           },
           async onChange(){
+            if(this.bookcode == '') return;
             let uri = `{{route('root')}}/ajax/bookcodes/${this.bookcode}`;
-            console.log(uri);
             await fetch(uri)
             .then((response) => response.json())
             .then((response) => {
@@ -156,6 +186,7 @@
             this[name] = selectedInput
           },
           async onChange(){
+            if(this[name] == '') return;
             let uri = `{{route('root')}}/ajax/${name}s/${this[name]}`;
             console.log(uri);
             await fetch(uri)
@@ -175,6 +206,53 @@
             .catch(err => console.log(err))
           }
         }
+      }
+    </script>
+    <script>
+      function returnBook(borrowingId,title, borrower){
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        console.log(borrowingId)
+        Swal.fire({
+          title: 'Konfirmasi pengembalian?',
+          text: "Konfirmasi pengembalian buku "+title+" oleh "+borrower+ "?",
+          icon: 'warning',
+          showCancelButton: true,
+          customClass: {
+            confirmButton: "font-poppins font-medium uppercase tracking-wider",
+            cancelButton: "font-poppins font-medium uppercase tracking-wider"
+          },
+          confirmButtonColor: '#22C55E',
+          cancelButtonColor: '#ef4444',
+          confirmButtonText: 'Konfirmasi',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            url = '{{route('root')}}/borrowings/'+borrowingId;
+            fetch(url, {
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+              method: 'PATCH',
+            })
+            .then(res => res.json())
+            .then(res=> {
+              // console.log(res);
+              if(res.status == 'ok'){
+                let selector = "[data-id='"+borrowingId+"']";
+                document.querySelector(selector).remove();
+                Swal.fire(
+                  'Berhasil',
+                  'Pengembalian tersimpan',
+                  'success'
+                )
+              }
+            })
+            
+          }
+        })
       }
     </script>
   </x-slot>

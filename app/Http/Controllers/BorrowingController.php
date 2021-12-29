@@ -6,6 +6,7 @@ use App\Models\Borrowing;
 use App\Models\Stock;
 use App\Models\Book;
 use App\Models\Member;
+use Date;
 use Illuminate\Http\Request;
 
 class BorrowingController extends Controller
@@ -49,15 +50,22 @@ class BorrowingController extends Controller
 					"required",
 					function ($attribute, $value, $fail) use ($request) {
 						$targetBook = Book::firstWhere('book_code', '=', $request->get('book_code'));
-						if ($targetBook != null && $value > $targetBook->stock->stock) {
+						if ($value < 1) {
+							$fail('Jumlah buku minimal 1');
+						} else if ($targetBook != null && $value > $targetBook->stock->stock) {
 							$fail('Jumlah melebihi stok (' . $targetBook->stock->stock . ')');
 						}
 					},
+				],
+				"return_date" => [
+					"required",
+					"after_or_equal:now",
 				]
 			],
 			[
 				"book_code.exists" => "Kode buku salah",
-				"borrower.exists" => "Nama peminjam tidak valid"
+				"borrower.exists" => "Nama peminjam tidak valid",
+				"return_date.after_or_equal" => "Tanggal pengembalian tidak valid"
 			]
 		);
 		$targetBook = Book::firstWhere('book_code', '=', $request->get('book_code'));
@@ -71,7 +79,6 @@ class BorrowingController extends Controller
 			"return_date" => $request->get('return_date'),
 			"status" => "NOT_RETURNED",
 		]);
-
 		$targetStock->update([
 			"stock" => ($targetStock->stock - $newBorrowing->amount)
 		]);
@@ -110,7 +117,25 @@ class BorrowingController extends Controller
 	 */
 	public function update(Request $request, Borrowing $borrowing)
 	{
-		//
+		if (Request::METHOD_PATCH) {
+			$borrowing->update([
+				"returned_at" => now(),
+				"status" => "RETURNED"
+			]);
+			$targetStock = Stock::firstWhere('book_id', '=', $borrowing->book->id);
+			// Update stock
+			$targetStock->update([
+				"stock" => ($targetStock->stock + $borrowing->amount)
+			]);
+			$response = [];
+			if ($borrowing->wasChanged(["status", "returned_at"]))  $response["status"] = "ok";
+			else $$response["status"] = "failed";
+			return $response;
+		} else {
+			return [
+				"status" => "DONTKNOW",
+			];
+		}
 	}
 
 	/**

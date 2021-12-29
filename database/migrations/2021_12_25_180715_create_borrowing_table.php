@@ -16,8 +16,9 @@ class CreateBorrowingTable extends Migration
         Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
             $table->integer('amount')->unsigned();
-            $table->date('return_date');
             $table->enum('status', ["NOT_RETURNED", "RETURNED", "LOST"]);
+            $table->date('return_date');
+            $table->date('returned_at')->nullable();
             $table->timestamps();
             $table->foreignId('book_id')->constrained('books')->restrictOnDelete()->restrictOnUpdate();
             $table->foreignId('member_id')->constrained('members')->restrictOnDelete()->restrictOnUpdate();
