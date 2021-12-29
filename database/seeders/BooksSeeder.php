@@ -141,23 +141,23 @@ class BooksSeeder extends Seeder
             'book_id' => $book->id
         ]);
 
-        // $book = Book::create([
-        //     'book_code' => Str::upper(Str::random(8)),
-        //     'isbn' => '9794180556',
-        //     'title' => 'Tenggelamnya Kapal Van Der Wijck',
-        //     'title_description' => '',
-        //     'edition' => '1',
-        //     'publication_year' => '1990',
-        //     'published_at' => 'Jakarta',
-        //     'exemplar' =>'224',
-        //     'amount' => 10,
-        //     'category_id' => 5,
-        //     'author_id' => 4,
-        //     'publisher_id' => 3,
-        // ]);
-        // Stock::create([
-        //     'stock' => $book->amount,
-        //     'book_id' => $book->id
-        // ]);
+        $book = Book::create([
+            'book_code' => Str::upper(Str::random(8)),
+            'isbn' => '9794180556',
+            'title' => 'Tenggelamnya Kapal Van Der Wijck',
+            'title_description' => '',
+            'edition' => '1',
+            'publication_year' => '1990',
+            'published_at' => 'Jakarta',
+            'exemplar' =>'224',
+            'amount' => 10,
+            'category_id' => 5,
+            'author_id' => 4,
+            'publisher_id' => 3,
+        ]);
+        Stock::create([
+            'stock' => $book->amount,
+            'book_id' => $book->id
+        ]);
     }
 }
