@@ -81,6 +81,7 @@
       </div>
     </x-section-header>
     <div class="overflow-x-auto">
+      @if($borrowings->count() > 0)
       <table class="w-full">
         <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
           <tr class="">
@@ -90,7 +91,7 @@
             <th class="px-4 py-3">Nama peminjam</th>
             <th class="px-4 py-3">Jumlah</th>
             <th class="px-4 py-3">Tanggal peminjaman</th>
-            <th class="px-4 py-3">Tanggal pengembalian</th>
+            <th class="px-4 py-3">Batas pengembalian</th>
             <th scope=" col" class="relative px-4 py-1">
               <span class="sr-only">Edit</span>
             </th>
@@ -112,15 +113,70 @@
                   onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
                   <x-icons.check size="5" />
                 </x-button>
-                <x-button-link class="px-[6px] py-[6px]" link="{{ route('borrowings.edit', ['borrowing' => $b->id]) }}">
-                  <x-icons.edit size="5" />
-                </x-button-link>
+                <x-button class="px-[6px] py-[6px]"
+                  onclick="addMoreDate({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}', '{{$b->return_date}}')">
+                  <x-icons.plus size="5" />
+                </x-button>
               </div>
             </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+      @else
+      <div class="flex flex-col justify-center items-center space-y-4">
+        <x-icons.cross-circle size="12" />
+        <h4 class="text-xl">Tidak ada peminjaman berlangsung</h4>
+      </div>
+      @endif
+    </div>
+  </x-section-card>
+
+  <x-section-card class="">
+    <x-section-header title="Riwayat peminjaman">
+      <div class=" flex flex-row justify-around items-center">
+        {{-- <x-button-link title="Tambah" link="{{ route('borrowings.create') }}">
+          <x-icons.plus size="5" />
+        </x-button-link> --}}
+      </div>
+    </x-section-header>
+    <div class="overflow-x-auto">
+      @if($borrowingsHistory->count() > 0)
+      <table class="w-full">
+        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+          <tr class="">
+            <th class="px-0 pb-3">#</th>
+            <th class="px-4 py-3">Judul</th>
+            <th class="px-4 py-3">Kode buku</th>
+            <th class="px-4 py-3">Nama peminjam</th>
+            <th class="px-4 py-3">Jumlah</th>
+            <th class="px-4 py-3">Tanggal peminjaman</th>
+            <th class="px-4 py-3">Tanggal pengembalian</th>
+            {{-- <th scope=" col" class="relative px-4 py-1">
+              <span class="sr-only">Edit</span>
+            </th> --}}
+          </tr>
+        </thead>
+        <tbody id="history" class="text-lg w-full">
+          @foreach ($borrowingsHistory as $b)
+          <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
+            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
+            <td class="px-4 py-3">{{$b->book->title}}</td>
+            <td class="px-4 py-3">{{$b->book->book_code}}</td>
+            <td class="px-4 py-3">{{$b->member->name}}</td>
+            <td class="px-4 py-3">{{$b->amount}}</td>
+            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->returned_at))}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+      @else
+      <div class="flex flex-col justify-center items-center space-y-4">
+        <x-icons.cross-circle size="12" />
+        <h4 class="text-xl">Tidak ada riwayat peminjaman</h4>
+      </div>
+      @endif
     </div>
   </x-section-card>
 
@@ -173,6 +229,7 @@
           }
         }
       };
+
       function inputSelect(name) {
         return {
           [name]: '',
@@ -209,8 +266,70 @@
       }
     </script>
     <script>
+      let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      function addMoreDate(borrowingId, title, borrower, currentDate, error = null){
+        Swal.fire({
+          title: 'Perbarui waktu pengembalian',
+          html: ''+
+            '<div class="flex flex-col items-center justify-center py-1 space-y-4">'+
+              '<div class="flex flex-col">'+
+                '<span> Judul : '+title+'</span>'+
+                '<span> Peminjam : '+borrower+'</span>'+
+                '<span> Tanggal pengembalian : '+currentDate+'</span>'+
+              '</div>'+
+                '<input type="date" id="update_return_date" name="return_date" value="'+currentDate+'" class="block w-full rounded-md outline-none border-1 border-gray-300 hover:border-blue-500 focus:border-blue-500 transition-all"></input>'+
+                (error ? '<span class="text-red-500">' : '') + (error ? error : '') + (error ? '</span>' : '') +
+            '</div>',
+          icon: 'warning',
+          showCancelButton: true,
+          customClass: {
+            confirmButton: "font-poppins font-medium uppercase tracking-wider",
+            cancelButton: "font-poppins font-medium uppercase tracking-wider"
+          },
+          confirmButtonColor: '#22C55E',
+          cancelButtonColor: '#ef4444',
+          confirmButtonText: 'Konfirmasi',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            url = '{{route('root')}}/borrowings/'+borrowingId;
+            let returndate = document.querySelector('#update_return_date').value;
+            console.log(returndate);
+            fetch(url, {
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+              method: 'PUT',
+              body: JSON.stringify({
+                '_token': token,
+                'return_date' : returndate
+              })
+            })
+            .then(res => res.json())
+            .then(res=> {
+              // console.log(res);
+              if(res.status == 'ok'){
+                Swal.fire({
+                  title: 'Berhasil',
+                  text: 'Tanggal pengembalian diperpanjang',
+                  icon:'success'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.reload();
+                  }
+                })
+              } else {
+                addMoreDate(borrowingId, title, borrower, returndate, res.message);
+              }
+            })
+          }
+        });
+      };
+
       function returnBook(borrowingId,title, borrower){
-        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         console.log(borrowingId)
         Swal.fire({
           title: 'Konfirmasi pengembalian?',
@@ -241,16 +360,20 @@
             .then(res=> {
               // console.log(res);
               if(res.status == 'ok'){
-                let selector = "[data-id='"+borrowingId+"']";
-                document.querySelector(selector).remove();
-                Swal.fire(
-                  'Berhasil',
-                  'Pengembalian tersimpan',
-                  'success'
-                )
+                // let selector = "[data-id='"+borrowingId+"']";
+                // $returnedElement = document.querySelector(selector);
+                // document.querySelector('#history').append($returnedElement);
+                Swal.fire({
+                  title: 'Berhasil',
+                  text: 'Pengembalian tersimpan',
+                  icon:'success'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.reload();
+                  }
+                })
               }
             })
-            
           }
         })
       }

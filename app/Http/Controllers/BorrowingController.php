@@ -6,6 +6,7 @@ use App\Models\Borrowing;
 use App\Models\Stock;
 use App\Models\Book;
 use App\Models\Member;
+use Carbon\Carbon;
 use Date;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,10 @@ class BorrowingController extends Controller
 	public function index()
 	{
 		$borrowings = Borrowing::where('status', '=', "NOT_RETURNED")->get();
+		$borrowingsHistory = Borrowing::where('status', '=', "RETURNED")->get();
 		$totalBorrowedTitle = $borrowings->count();
 		$totalBorrowedBooks = $borrowings->sum('amount');
-		return view('borrowings.index', compact('borrowings', 'totalBorrowedTitle', 'totalBorrowedBooks'));
+		return view('borrowings.index', compact('borrowings', 'borrowingsHistory', 'totalBorrowedTitle', 'totalBorrowedBooks'));
 	}
 
 	/**
@@ -117,7 +119,7 @@ class BorrowingController extends Controller
 	 */
 	public function update(Request $request, Borrowing $borrowing)
 	{
-		if (Request::METHOD_PATCH) {
+		if ($request->isMethod(Request::METHOD_PATCH)) {
 			$borrowing->update([
 				"returned_at" => now(),
 				"status" => "RETURNED"
@@ -131,10 +133,19 @@ class BorrowingController extends Controller
 			if ($borrowing->wasChanged(["status", "returned_at"]))  $response["status"] = "ok";
 			else $$response["status"] = "failed";
 			return $response;
-		} else {
-			return [
-				"status" => "DONTKNOW",
-			];
+		} else if ($request->isMethod(Request::METHOD_PUT)) {
+			if (!Carbon::createFromDate($request->return_date)->greaterThanOrEqualTo(now())) {
+				$response["status"] = "failed";
+				$response["message"] = "Tanggal pengembalian tidak valid";
+				return $response;
+			}
+			$borrowing->update([
+				"return_date" => $request->get('return_date'),
+			]);
+			$response = [];
+			if ($borrowing->wasChanged(["return_date"]))  $response["status"] = "ok";
+			else $$response["status"] = "failed";
+			return $response;
 		}
 	}
 

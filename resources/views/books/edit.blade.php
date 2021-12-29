@@ -104,6 +104,7 @@
               <x-label for="amount" :value="__('Jumlah buku')" />
               <x-input id="amount" name="amount" type="number" placeholder="Jumlah"
                 :value="old('amount', $book->amount)" required autofocus />
+              <x-validation-error field="amount" />
             </div>
           </div>
         </div>
