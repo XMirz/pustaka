@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
+use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (request('title')) {
+        $results = Book::latest()->where('title', 'like', '%' . request('title') . '%')->limit(16)->get();
+        return view('index', compact('results'));
+    } else {
+    }
+    return view('index');
 })->name('root');
+
+// Route::get('/find', function () {
+//     return view('index');
+// })->name('root.search');
 
 Route::group(["middleware" => "auth"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

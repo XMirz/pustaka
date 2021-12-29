@@ -32,7 +32,7 @@
       @include('layouts.navbar')
       <main class="relative h-[calc(100vh-56px)] px-8 space-y-6 pb-8 overflow-y-auto">
         <div class="pt-8">
-          <h1 class="font-bold text-gray-700 text-3xl">{{$title ?? ''}}</h1>
+          <h1 class="font-semibold font-poppins tracking-widest text-gray-700 text-3xl">{{$title ?? ''}}</h1>
         </div>
         {{ $slot }}
       </main>

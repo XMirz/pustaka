@@ -1,6 +1,6 @@
 @props(["totalBorrowedTitle" => 0, "totalBorrowedBooks" => 0])
 <div id="total-books-card"
-  class="w-64 bg-white px-8 py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
+  class="flex-grow border border-black/10 bg-white px-8 py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
   <div class="">
     <h2 class="font-bold text-xl text-blue-600">Total Peminjaman</h2>
   </div>

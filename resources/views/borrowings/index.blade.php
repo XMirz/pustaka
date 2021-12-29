@@ -4,7 +4,7 @@
   </x-slot>
 
   <x-slot name="title">Peminjaman</x-slot>
-  <div class="flex flex-row space-x-8">
+  <div class="flex flex-row  space-x-8">
     <x-cards.total-borrowings totalBorrowedTitle="{{$totalBorrowedTitle ?? 0}}"
       totalBorrowedBooks="{{$totalBorrowedBooks ?? 0}}" />
   </div>
@@ -277,7 +277,7 @@
                 '<span> Peminjam : '+borrower+'</span>'+
                 '<span> Tanggal pengembalian : '+currentDate+'</span>'+
               '</div>'+
-                '<input type="date" id="update_return_date" name="return_date" value="'+currentDate+'" class="block w-full rounded-md outline-none border-1 border-gray-300 hover:border-blue-500 focus:border-blue-500 transition-all"></input>'+
+                '<input type="date" id="update_return_date" name="return_date" value="'+currentDate+'" class="block w-1/2 rounded-md outline-none border-1 border-gray-300 hover:border-blue-500 focus:border-blue-500 transition-all"></input>'+
                 (error ? '<span class="text-red-500">' : '') + (error ? error : '') + (error ? '</span>' : '') +
             '</div>',
           icon: 'warning',
@@ -315,7 +315,8 @@
                 Swal.fire({
                   title: 'Berhasil',
                   text: 'Tanggal pengembalian diperpanjang',
-                  icon:'success'
+                  icon:'success',
+                  closeOnClickOutside: false
                 }).then((result) => {
                   if (result.isConfirmed) {
                     window.location.reload();

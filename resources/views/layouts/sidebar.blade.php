@@ -1,7 +1,13 @@
 <div class=" bg-white w-72 text-gray-800  relative inset-y-0  shadow-md">
   <div class="p-6 space-y-6">
-    <div class="py-6 text-center">
-      <h1 class="font-poppins text-xl font-semibold">Perpustakaan</h1>
+    <div class=" flex flex-row items-center space-x-4 justify-center ">
+      <div class="w-14 h-14">
+        <x-icons.app />
+      </div>
+      <div class="font-poppins">
+        <h1 class="text-xl font-semibold ">Perpustakaan</h1>
+        <h4 class="">SMK Telkom</h4>
+      </div>
     </div>
     <div id="nav-item" class="">
       <ul class="tracking-wider">
