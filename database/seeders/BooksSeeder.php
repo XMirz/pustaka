@@ -46,6 +46,10 @@ class BooksSeeder extends Seeder
         Author::create([
             'name' => 'Hamka',
         ]);
+// id =5
+        Author::create([
+            'name' => 'Suerli, Maman Suryaman, Aji Septiaji, Istiqomah',
+        ]);
 
 
 // id =1
@@ -62,6 +66,11 @@ class BooksSeeder extends Seeder
         Publisher::create([
             'name' => 'Bulan Bintang',
             'address' => 'Jl. Kramat Kwitang I, RT.4/RW.7, Kwitang, Kec. Senen, Kota Jakarta Pusat'
+        ]);
+// id =4
+        Publisher::create([
+            'name' => 'Kemendikbud',
+            'address' => 'Jl. Jenderal Sudirman, Senayan, Jakarta Pusat'
         ]);
 
 // book
@@ -143,17 +152,36 @@ class BooksSeeder extends Seeder
 
         $book = Book::create([
             'book_code' => Str::upper(Str::random(8)),
-            'isbn' => '9794180556',
-            'title' => 'Tenggelamnya Kapal Van Der Wijck',
+            'isbn' => '9786024271022',
+            'title' => 'BG Bahasa Indonesia Kelas XII Kur.2013',
             'title_description' => '',
-            'edition' => '1',
-            'publication_year' => '1990',
+            'edition' => '2',
+            'publication_year' => '2018',
             'published_at' => 'Jakarta',
-            'exemplar' =>'224',
-            'amount' => 10,
-            'category_id' => 5,
-            'author_id' => 4,
-            'publisher_id' => 3,
+            'exemplar' =>'256',
+            'amount' => 35,
+            'category_id' => 1,
+            'author_id' => 5,
+            'publisher_id' => 4,
+        ]);
+        Stock::create([
+            'stock' => $book->amount,
+            'book_id' => $book->id
+        ]);
+
+        $book = Book::create([
+            'book_code' => Str::upper(Str::random(8)),
+            'isbn' => '9786024271022',
+            'title' => 'Buku Guru Bahasa Indonesia SMA/MA/SMK/MAK Kelas XI',
+            'title_description' => '',
+            'edition' => '2',
+            'publication_year' => '2017',
+            'published_at' => 'Jakarta',
+            'exemplar' =>'422',
+            'amount' => 33,
+            'category_id' => 1,
+            'author_id' => 5,
+            'publisher_id' => 4,
         ]);
         Stock::create([
             'stock' => $book->amount,
@@ -161,3 +189,4 @@ class BooksSeeder extends Seeder
         ]);
     }
 }
+ 
