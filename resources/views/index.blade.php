@@ -60,8 +60,8 @@
                 <h6>ISBN : {{$book->isbn}} </h6>
                 <h6>Terbitan : {{$book->publisher->name}}, {{$book->published_at}}. Tahun {{$book->publication_year}}
                   ({{$book->edition ? 'Edisi ke-'.$book->edition : ''}}) </h6>
-                <h6>Jumlah halaman : {{$book->exemplar}} Halaman
-                </h6>
+                <h6>Jumlah halaman : {{$book->exemplar}} Halaman </h6>
+                <h6>Letak buku : Rak {{$book->category->place}} </h6>
                 <div class="flex flex-col w-full justify-end items-end font-poppins font-semibold">
                   <h6 class="">Kode buku : {{$book->book_code}} </h6>
                   {!!$book->stock->stock > 0 ? '<h6 class="text-blue-600">Tersedia</h6>' : '<h6 class="text-red-500">

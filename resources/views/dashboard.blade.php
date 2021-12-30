@@ -9,5 +9,6 @@
         <x-cards.total-borrowings totalBorrowedTitle="{{$totalBorrowedTitle ?? 0}}"
             totalBorrowedBooks="{{$totalBorrowedBooks ?? 0}}" />
         <x-cards.total-members totalMembers="{{$totalMembers}}" />
+        <x-cards.total-categories totalCategories="{{$totalCategories ?? 0}}" />
     </div>
 </x-dashboard-layout>

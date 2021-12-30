@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Borrowing;
+use App\Models\Category;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,9 @@ class DashboardController extends Controller
 
         $members = Member::all();
         $totalMembers = $members->count();
-        return view('dashboard', compact('totalTitle', 'totalBooks', 'totalBorrowedTitle', 'totalBorrowedBooks', 'totalMembers'));
+
+        $categories = Category::withCount('books')->get();
+        $totalCategories = $categories->count();
+        return view('dashboard', compact('totalTitle', 'totalBooks', 'totalBorrowedTitle', 'totalBorrowedBooks', 'totalMembers', 'totalCategories'));
     }
 }

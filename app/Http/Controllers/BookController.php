@@ -22,7 +22,10 @@ class BookController extends Controller
     $books = Book::all();
     $totalTitle = $books->count();
     $totalBooks = $books->sum('amount');
-    return view('books.index', compact('books', 'totalTitle', 'totalBooks'));
+
+    $categories = Category::withCount('books')->get();
+    $totalCategories = $categories->count();
+    return view('books.index', compact('books', 'totalTitle', 'totalBooks', 'categories', 'totalCategories'));
   }
 
   /**
