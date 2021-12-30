@@ -1,4 +1,5 @@
 <x-guest-layout>
+  <x-slot name="title">{{request('title') ? 'Cari Buku - ' : ''}}Perpustakaan SMK Telkom</x-slot>
   <div class="relative h-screen overflow-y-auto flex flex-col ">
     <div class="absolute right-0 top-12 w-1/2">
       <img class="img-shadow" src="{{asset('img/hero.webp')}}" alt="" srcset="">
@@ -82,7 +83,7 @@
       </div>
       @endif
     </div>
-    <div class="text-blue-500 pt-12 @if(!request('title')) pt-32 @endif">
+    <div class="text-blue-500 {{request('title') ? 'pt-12' : 'pt-32'}}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path fill="#0099ff" fill-opacity="1"
           d="M0,160L40,176C80,192,160,224,240,234.7C320,245,400,235,480,197.3C560,160,640,96,720,101.3C800,107,880,181,960,181.3C1040,181,1120,107,1200,64C1280,21,1360,11,1400,5.3L1440,0L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">

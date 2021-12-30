@@ -61,6 +61,8 @@ class MemberController extends Controller
 
     public function destroy(Member $member)
     {
-        //
+        $member->delete();
+        $response["status"] = "ok";
+        return $response;
     }
 }

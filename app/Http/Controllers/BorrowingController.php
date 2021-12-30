@@ -144,7 +144,7 @@ class BorrowingController extends Controller
 			]);
 			$response = [];
 			if ($borrowing->wasChanged(["return_date"]))  $response["status"] = "ok";
-			else $$response["status"] = "failed";
+			else $response["status"] = "failed";
 			return $response;
 		}
 	}

@@ -45,9 +45,11 @@
                 <x-button-link class="px-[6px] py-[6px]" link="{{ route('members.edit', ['member' => $m->id]) }}">
                   <x-icons.edit size="5" />
                 </x-button-link>
-                <x-button-link class="px-[6px] py-[6px]">
-                  <x-icons.plus size="5" />
-                </x-button-link>
+                @if (!$m->borrowing->count() > 0)
+                <x-button class="px-[6px] py-[6px] bg-red-500" onclick="destroyMember('{{$m->id}}', '{{$m->name}}')">
+                  <x-icons.trash size="5" />
+                </x-button>
+                @endif
               </div>
             </td>
           </tr>
@@ -66,90 +68,12 @@
 
   <x-slot name="script">
     <script>
-      function bookcodes() {
-        return {
-          bookcode: '',
-          open: false,
-          initialize(value){
-            this.bookcode = value
-          },
-          list: '',
-          select(selectedInput){
-            this.open = false,
-            this.bookcode = selectedInput
-          },
-          async onChange(){
-            if(this.bookcode == '') return;
-            let uri = `{{route('root')}}/ajax/bookcodes/${this.bookcode}`;
-            await fetch(uri)
-            .then((response) => response.json())
-            .then((response) => {
-              let fetchedList = ' ';
-              if(response.length < 1) return;
-              response.forEach(function (element){
-                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                  x-on:click="select('${element.code}')">
-                  ${element.label}
-                </li>`
-              });
-              this.list = fetchedList
-              this.open = true
-            })
-            .catch(err => console.log(err))
-          }
-        }
-      };
-
-      function inputSelect(name) {
-        return {
-          [name]: '',
-          open: false,
-          initialize(value){
-            this[name] = value
-          },
-          list: '',
-          select(selectedInput){
-            this.open = false,
-            this[name] = selectedInput
-          },
-          async onChange(){
-            if(this[name] == '') return;
-            let uri = `{{route('root')}}/ajax/${name}s/${this[name]}`;
-            console.log(uri);
-            await fetch(uri)
-            .then((response) => response.json())
-            .then((response) => {
-              let fetchedList = ' ';
-              if(response.length < 1) return;
-              response.forEach(function (element){
-                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                  x-on:click="select('${element.name}')">
-                  ${element.name}
-                </li>`
-              });
-              this.list = fetchedList
-              this.open = true
-            })
-            .catch(err => console.log(err))
-          }
-        }
-      }
-    </script>
-    <script>
       let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      function addMoreDate(borrowingId, title, borrower, currentDate, error = null){
+      function destroyMember(memberId,name){
+        console.log(memberId)
         Swal.fire({
-          title: 'Perbarui waktu pengembalian',
-          html: ''+
-            '<div class="flex flex-col items-center justify-center py-1 space-y-4">'+
-              '<div class="flex flex-col">'+
-                '<span> Judul : '+title+'</span>'+
-                '<span> Peminjam : '+borrower+'</span>'+
-                '<span> Tanggal pengembalian : '+currentDate+'</span>'+
-              '</div>'+
-                '<input type="date" id="update_return_date" name="return_date" value="'+currentDate+'" class="block w-full rounded-md outline-none border-1 border-gray-300 hover:border-blue-500 focus:border-blue-500 transition-all"></input>'+
-                (error ? '<span class="text-red-500">' : '') + (error ? error : '') + (error ? '</span>' : '') +
-            '</div>',
+          title: 'Hapus '+name+ '?',
+          text: 'Hapus '+name+ ' dari anggota perpustakaan?',
           icon: 'warning',
           showCancelButton: true,
           customClass: {
@@ -162,9 +86,7 @@
           cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
-            url = '{{route('root')}}/borrowings/'+borrowingId;
-            let returndate = document.querySelector('#update_return_date').value;
-            console.log(returndate);
+            url = '{{route('root')}}/members/'+memberId;
             fetch(url, {
               headers: {
                 "Content-Type": "application/json",
@@ -172,70 +94,15 @@
                 "X-Requested-With": "XMLHttpRequest",
                 "X-CSRF-TOKEN": token
                 },
-              method: 'PUT',
-              body: JSON.stringify({
-                '_token': token,
-                'return_date' : returndate
-              })
+              method: 'DELETE',
             })
             .then(res => res.json())
             .then(res=> {
-              // console.log(res);
               if(res.status == 'ok'){
                 Swal.fire({
+                  allowOutsideClick: false,
                   title: 'Berhasil',
-                  text: 'Tanggal pengembalian diperpanjang',
-                  icon:'success'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    window.location.reload();
-                  }
-                })
-              } else {
-                addMoreDate(borrowingId, title, borrower, returndate, res.message);
-              }
-            })
-          }
-        });
-      };
-
-      function returnBook(borrowingId,title, borrower){
-        console.log(borrowingId)
-        Swal.fire({
-          title: 'Konfirmasi pengembalian?',
-          text: "Konfirmasi pengembalian buku "+title+" oleh "+borrower+ "?",
-          icon: 'warning',
-          showCancelButton: true,
-          customClass: {
-            confirmButton: "font-poppins font-medium uppercase tracking-wider",
-            cancelButton: "font-poppins font-medium uppercase tracking-wider"
-          },
-          confirmButtonColor: '#22C55E',
-          cancelButtonColor: '#ef4444',
-          confirmButtonText: 'Konfirmasi',
-          cancelButtonText: 'Batal'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            url = '{{route('root')}}/borrowings/'+borrowingId;
-            fetch(url, {
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json, text-plain, */*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token
-                },
-              method: 'PATCH',
-            })
-            .then(res => res.json())
-            .then(res=> {
-              // console.log(res);
-              if(res.status == 'ok'){
-                // let selector = "[data-id='"+borrowingId+"']";
-                // $returnedElement = document.querySelector(selector);
-                // document.querySelector('#history').append($returnedElement);
-                Swal.fire({
-                  title: 'Berhasil',
-                  text: 'Pengembalian tersimpan',
+                  text: name+ ' dihapus',
                   icon:'success'
                 }).then((result) => {
                   if (result.isConfirmed) {
