@@ -1,14 +1,18 @@
 <x-slot name="head">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </x-slot>
-<div class=" bg-white w-72 text-gray-800  relative inset-y-0  shadow-md">
-  <div class="p-6 space-y-6">
-    <div class=" flex flex-row items-center space-x-4 justify-center ">
-      <div class="w-14 h-14">
-        <x-icons.app />
-      </div>
-      <div class="font-poppins">
-        <h1 class="text-xl font-semibold ">Perpustakaan</h1>
+<div id="sidebar"
+  class=" bg-white w-max text-gray-800 absolute md:relative z-10 left-0 inset-y-0  shadow-md -translate-x-full transition-transform">
+  <div class="px-4 md:px-6 py-3 md:py-6 space-y-2 md:space-y-6">
+    <div class="flex justify-end md:hidden">
+      <button onclick="closeSidebar()">
+        <x-icons.cross-circle />
+      </button>
+    </div>
+    <div class=" flex flex-row items-center gap-x-2 md:gap-x-4 justify-center ">
+      <x-icons.app class="w-10 md:w-12" />
+      <div class="font-poppins flex flex-col -space-y-2 md:space-y-0 ">
+        <h1 class="md:text-xl  font-semibold ">Perpustakaan</h1>
         <h4 class="">SMK Telkom</h4>
       </div>
     </div>
@@ -19,7 +23,7 @@
             <button onclick="addBorrowing()"
               class="flex flex-row  items-center space-x-4 w-full px-3 py-2 rounded-lg bg-green-600 text-white transition-all outline-none focus:outline-none ">
               <x-icons.plus></x-icons.plus>
-              <span class="tracking-wider text-base">Peminjaman Baru</span>
+              <span class="tracking-wider text-base ">Peminjaman Baru</span>
             </button>
           </li>
           <x-nav-item title="Dashboard" isActive="{{Request::is('dashboard')}}" link="{{ route('dashboard.index') }}">

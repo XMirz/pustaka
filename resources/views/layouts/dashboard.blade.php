@@ -28,7 +28,7 @@
   <div class="bg-gray-100 flex flex-row">
     <!-- Page Content -->
     @include('layouts.sidebar')
-    <div class="flex-1 h-screen">
+    <div class="h-screen w-full overflow-x-auto">
       @include('layouts.navbar')
       <main class="relative h-[calc(100vh-56px)] px-8 space-y-6 pb-8 overflow-y-auto">
         <div class="pt-8">
@@ -93,36 +93,53 @@
   </div>
 
   <script>
+    // sidebar
+    let sidebar = document.querySelector('#sidebar');
+    function closeSidebar() {
+      sidebar.classList.add('-translate-x-full');
+    };
+    function showSidebar() {
+      sidebar.classList.remove('-translate-x-full');
+    };
+    function checkWindowSize() {
+      console.log(window.matchMedia('(min-width: 768px)'));
+      if (window.matchMedia('(min-width: 768px)').matches) showSidebar();
+      else closeSidebar()
+    };
+    window.onresize = checkWindowSize;
+    window.onload = checkWindowSize;
+  </script>
+  <script>
     function bookcodes() {
       return {
         bookcode: '',
         open: false,
-        initialize(value){
+        initialize(value) {
           this.bookcode = value
         },
         list: '',
-        select(selectedInput){
+        select(selectedInput) {
           this.open = false,
-          this.bookcode = selectedInput
+            this.bookcode = selectedInput
         },
-        async onChange(){
-          if(this.bookcode == '') return;
+        async onChange() {
+          if (this.bookcode == '') return;
           let uri = `{{route('root')}}/ajax/bookcodes/${this.bookcode}`;
           await fetch(uri)
-          .then((response) => response.json())
-          .then((response) => {
-            let fetchedList = ' ';
-            if(response.length < 1) return;
-            response.forEach(function (element){
-              fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+            .then((response) => response.json())
+            .then((response) => {
+              let fetchedList = ' ';
+              if (response.length < 1) return;
+              response.forEach(function (element) {
+                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 x-on:click="select('${element.code}')">
                 ${element.label}
               </li>`
-            });
-            this.list = fetchedList
-            this.open = true
-          })
-          .catch(err => console.log(err))
+              });
+              this.list = fetchedList
+              this.open = true
+            })
+            .catch(err => console.log(err))
         }
       }
     };
@@ -131,33 +148,33 @@
       return {
         [name]: '',
         open: false,
-        initialize(value){
+        initialize(value) {
           this[name] = value
         },
         list: '',
-        select(selectedInput){
+        select(selectedInput) {
           this.open = false,
-          this[name] = selectedInput
+            this[name] = selectedInput
         },
-        async onChange(){
-          if(this[name] == '') return;
+        async onChange() {
+          if (this[name] == '') return;
           let uri = `{{route('root')}}/ajax/${name}s/${this[name]}`;
           console.log(uri);
           await fetch(uri)
-          .then((response) => response.json())
-          .then((response) => {
-            let fetchedList = ' ';
-            if(response.length < 1) return;
-            response.forEach(function (element){
-              fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+            .then((response) => response.json())
+            .then((response) => {
+              let fetchedList = ' ';
+              if (response.length < 1) return;
+              response.forEach(function (element) {
+                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 x-on:click="select('${element.name}')">
                 ${element.name}
               </li>`
-            });
-            this.list = fetchedList
-            this.open = true
-          })
-          .catch(err => console.log(err))
+              });
+              this.list = fetchedList
+              this.open = true
+            })
+            .catch(err => console.log(err))
         }
       }
     }
@@ -165,46 +182,46 @@
   <script>
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     let formAddBorrowing = document.querySelector('#addBorrowing').outerHTML
-      function addBorrowing(){
-        Swal.fire({
-          title: '<h2 class="pt-8"><span class="font-poppins">Peminjaman baru</span></h2>',
-          html: formAddBorrowing,
-          showCancelButton: false,
-          showConfirmButton: false,
-          customClass: {
-            confirmButton: "font-poppins font-medium uppercase tracking-wider",
-            cancelButton: "font-poppins font-medium uppercase tracking-wider"
-          },
-          confirmButtonColor: '#22C55E',
-          cancelButtonColor: '#ef4444',
-          confirmButtonText: 'Konfirmasi',
-          cancelButtonText: 'Batal'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            url = '{{route('root')}}/borrowings/'+borrowingId;
-            let returndate = document.querySelector('#update_return_date').value;
-            console.log(returndate);
-            fetch(url, {
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json, text-plain, */*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token
-                },
-              method: 'PUT',
-              body: JSON.stringify({
-                '_token': token,
-                'return_date' : returndate
-              })
+    function addBorrowing() {
+      Swal.fire({
+        title: '<h2 class="pt-8"><span class="font-poppins">Peminjaman baru</span></h2>',
+        html: formAddBorrowing,
+        showCancelButton: false,
+        showConfirmButton: false,
+        customClass: {
+          confirmButton: "font-poppins font-medium uppercase tracking-wider",
+          cancelButton: "font-poppins font-medium uppercase tracking-wider"
+        },
+        confirmButtonColor: '#22C55E',
+        cancelButtonColor: '#ef4444',
+        confirmButtonText: 'Konfirmasi',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          url = '{{route('root')}}/borrowings/' + borrowingId;
+          let returndate = document.querySelector('#update_return_date').value;
+          console.log(returndate);
+          fetch(url, {
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json, text-plain, */*",
+              "X-Requested-With": "XMLHttpRequest",
+              "X-CSRF-TOKEN": token
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+              '_token': token,
+              'return_date': returndate
             })
+          })
             .then(res => res.json())
-            .then(res=> {
+            .then(res => {
               // console.log(res);
-              if(res.status == 'ok'){
+              if (res.status == 'ok') {
                 Swal.fire({
                   title: 'Berhasil',
                   text: 'Tanggal pengembalian diperpanjang',
-                  icon:'success',
+                  icon: 'success',
                   closeOnClickOutside: false
                 }).then((result) => {
                   if (result.isConfirmed) {
@@ -215,9 +232,9 @@
                 addMoreDate(borrowingId, title, borrower, returndate, res.message);
               }
             })
-          }
-        });
-      };
+        }
+      });
+    };
   </script>
   {{$script ?? '' }}
 </body>

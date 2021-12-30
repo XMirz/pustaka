@@ -1,6 +1,6 @@
 <x-dashboard-layout>
   <x-slot name="title">Kategory Buku</x-slot>
-  <div class="flex flex-row space-x-8">
+  <div class="flex flex-row flex-wrap gap-6 md:gap-8">
     <x-cards.total-categories totalCategories="{{$totalCategories ?? 0}}" />
     <x-cards.total-books totalTitle="{{$totalTitle ?? 0}}" totalBooks="{{$totalBooks ?? 0}}" />
   </div>
@@ -18,10 +18,10 @@
         <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
           <tr class="">
             <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Nama</th>
-            <th class="px-4 py-3">Tempat</th>
-            <th class="px-4 py-3">Jumlah judul</th>
-            <th class="px-4 py-3">Jumlah buku</th>
+            <th class="px-2 py-3">Nama</th>
+            <th class="px-2 py-3">Tempat</th>
+            <th class="px-2 py-3">Jumlah judul</th>
+            <th class="px-2 py-3">Jumlah buku</th>
             <th scope="col" class="relative px-4 py-1 w-12 ">
               <span class="sr-only">Edit</span>
             </th>
@@ -31,12 +31,12 @@
           @foreach ($categories as $cat)
           <tr class="hover:bg-gray-100">
             <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-3">{{$cat->name}}</td>
-            <td class="px-4 py-3">Rak {{$cat->place}}</td>
-            <td class="px-4 py-3">{{$cat->books_count}} judul</td>
-            <td class="px-4 py-3">{{$cat->books_count}} buku</td>
-            <td class="px-4 py-3">
-              <div class="flex flex-row justify-end items-center space-x-2 ">
+            <td class="px-2 py-3">{{$cat->name}}</td>
+            <td class="px-2 py-3">Rak {{$cat->place}}</td>
+            <td class="px-2 py-3">{{$cat->books_count}} judul</td>
+            <td class="px-2 py-3">{{$cat->books_count}} buku</td>
+            <td class="px-2 py-3">
+              <div class="flex flex-row justify-center items-center space-x-2 ">
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('categories.edit', ['category' => $cat->id]) }}">
                   <x-icons.edit size="5" />

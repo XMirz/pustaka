@@ -11,60 +11,66 @@
           <x-icons.plus size="5" />
         </x-button-link> --}}
       </div>
+
     </x-section-header>
     <form action="{{route('borrowings.store')}}" method="post">
-      <div class="w-full flex flex-row space-x-8 ">
-        <div class="relative flex flex-col space-y-2" x-data="bookcodes()">
-          <x-label for="book_code" :value="__('Kode buku')" />
-          <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
-            autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
-            x-model="bookcode" x-init="initialize('{{old('book_code' )}}')" />
-          @error('book_code')
-          <span class="text-red-500">{{$message}}</span>
-          @enderror
-          {{-- Untuk dropdown peminjam --}}
-          <div @click.outside="open = false"
-            class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
-            x-show="open">
-            <ul class="" x-html="list">
-            </ul>
+      <div class="w-full flex flex-col md:flex-row gap-8 ">
+        <div class="contents gap-8">
+          <div class="relative flex flex-col space-y-2" x-data="bookcodes()">
+            <x-label for="book_code" :value="__('Kode buku')" />
+            <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
+              autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
+              x-model="bookcode" x-init="initialize('{{old('book_code' )}}')" />
+            @error('book_code')
+            <span class="text-red-500">{{$message}}</span>
+            @enderror
+            {{-- Untuk dropdown peminjam --}}
+            <div @click.outside="open = false"
+              class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
+              x-show="open">
+              <ul class="" x-html="list">
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="relative flex flex-col space-y-2 flex-grow" x-data="inputSelect('member')">
-          <x-label for="borrower" :value="__('Nama Peminjam')" />
-          <x-input id="borrower" name="borrower" type="text" placeholder="Nama" required autofocus autocomplete="off"
-            x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()" x-model="member"
-            x-init="initialize('{{old('borrower')}}')" />
-          @error('borrower')
-          <span class="text-red-500">{{$message}}</span>
-          @enderror
-          {{-- Untuk dropdown peminjam --}}
-          <div @click.outside="open = false"
-            class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
-            x-show="open">
-            <ul class="" x-html="list">
-            </ul>
+          <div class="relative flex flex-col space-y-2 flex-grow" x-data="inputSelect('member')">
+            <x-label for="borrower" :value="__('Nama Peminjam')" />
+            <x-input id="borrower" name="borrower" type="text" placeholder="Nama" required autofocus autocomplete="off"
+              x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()" x-model="member"
+              x-init="initialize('{{old('borrower')}}')" />
+            @error('borrower')
+            <span class="text-red-500">{{$message}}</span>
+            @enderror
+            {{-- Untuk dropdown peminjam --}}
+            <div @click.outside="open = false"
+              class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
+              x-show="open">
+              <ul class="" x-html="list">
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="flex flex-col space-y-2">
-          <x-label for="return_date" :value="__('Tanggal Pengembalian')" />
-          <x-input id="return_date" name="return_date" type="date" :value="old('return_date')" required autofocus />
-          <x-validation-error field="return_date" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <x-label for="amount" :value="__('Jumlah buku')" />
-          <div class="flex flex-row space-x-8">
-            <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
-              autofocus autocomplete="off" />
-            <x-button class="">
-              {{ __('Simpan') }}
-            </x-button>
+          <div class="flex flex-col space-y-2">
+            <x-label for="return_date" :value="__('Tanggal Pengembalian')" />
+            <x-input id="return_date" name="return_date" type="date" :value="old('return_date')" required autofocus />
+            <x-validation-error field="return_date" />
           </div>
-          @error('amount')
-          <span class="text-red-500">{{$message}}</span>
-          @enderror
+          <div class="flex flex-col space-y-2">
+            <x-label for="amount" :value="__('Jumlah buku')" />
+            <div class="flex flex-row space-x-8">
+              <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
+                autofocus autocomplete="off" />
+              <x-button class="">
+                {{ __('Simpan') }}
+              </x-button>
+            </div>
+            @error('amount')
+            <span class="text-red-500">{{$message}}</span>
+            @enderror
+          </div>
+          @csrf
         </div>
-        @csrf
+        <div class="">
+
+        </div>
       </div>
     </form>
   </x-section-card>

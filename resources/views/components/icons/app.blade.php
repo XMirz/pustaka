@@ -1,16 +1,8 @@
+@props(['class' => ''])
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="56" height="56" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"
+<svg class="{{$class}}" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"
   xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <metadata>
-    <rdf:RDF>
-      <cc:Work rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
   <g transform="translate(0,215)">
     <g transform="matrix(3.7803 0 0 -3.7803 -985.25 1465.1)">
       <g transform="translate(386,407)">
