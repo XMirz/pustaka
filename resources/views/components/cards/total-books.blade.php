@@ -2,7 +2,7 @@
 <div id="total-books-card"
   class="flex-grow  border border-black/10 bg-white px-8 py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
   <div class="">
-    <h2 class="font-bold text-xl text-blue-600">Total Buku</h2>
+    <h2 class="font-bold text-xl text-blue-600">Jumlah Buku</h2>
   </div>
   <div class="flex  justify-end">
     <div class="flex flex-col items-end justify-end">

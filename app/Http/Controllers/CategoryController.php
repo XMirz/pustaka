@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Str;
@@ -15,6 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $books = Book::all();
+        $totalTitle = $books->count();
+        $totalBooks = $books->sum('amount');
         $categories = Category::withCount('books')->get();
         $totalCategories = $categories->count();
         return view('categories.index', compact('totalTitle', 'totalBooks', 'categories', 'totalCategories'));
@@ -86,7 +90,7 @@ class CategoryController extends Controller
         ]);
         $newCat["category_code"] = Str::upper($newCat["category_code"]);
         $category->update($newCat);
-        return  redirect()->route('books.index');
+        return  redirect()->route('category.index');
     }
 
     /**
@@ -97,6 +101,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        $response["status"] = "ok";
+        return $response;
     }
 }

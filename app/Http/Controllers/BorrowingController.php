@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BorrowingStoreRequest;
 use App\Models\Borrowing;
 use App\Models\Stock;
 use App\Models\Book;
@@ -42,34 +43,9 @@ class BorrowingController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(BorrowingStoreRequest $request)
 	{
-		$request->validate(
-			[
-				"book_code" => ["required", "exists:books,book_code"],
-				"borrower" => ["required", "exists:members,name"],
-				"amount" => [
-					"required",
-					function ($attribute, $value, $fail) use ($request) {
-						$targetBook = Book::firstWhere('book_code', '=', $request->get('book_code'));
-						if ($value < 1) {
-							$fail('Jumlah buku minimal 1');
-						} else if ($targetBook != null && $value > $targetBook->stock->stock) {
-							$fail('Jumlah melebihi stok (' . $targetBook->stock->stock . ')');
-						}
-					},
-				],
-				"return_date" => [
-					"required",
-					"after_or_equal:now",
-				]
-			],
-			[
-				"book_code.exists" => "Kode buku salah",
-				"borrower.exists" => "Nama peminjam tidak valid",
-				"return_date.after_or_equal" => "Tanggal pengembalian tidak valid"
-			]
-		);
+		$request->validated();
 		$targetBook = Book::firstWhere('book_code', '=', $request->get('book_code'));
 		$targetStock = $targetBook->stock;
 		$targetMember = Member::firstWhere('name', '=', $request->get('borrower'));

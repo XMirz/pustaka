@@ -41,12 +41,15 @@
             <td class="px-4 py-3">{{$m->nisn ?? $m->nip ?? '-'}}</td>
             <td class="px-4 py-3">{{$m->address}}</td>
             <td class="px-4 py-3">
-              <div class="flex flex-row justify-center items-center space-x-2">
-                <x-button-link class="px-[6px] py-[6px]" link="{{ route('members.edit', ['member' => $m->id]) }}">
+              <div class="flex flex-row justify-center items-center space-x-2  ">
+                <x-button-link class="px-[6px] py-[6px] hover:scale-110"
+                  link="{{ route('members.edit', ['member' => $m->id]) }}">
                   <x-icons.edit size="5" />
                 </x-button-link>
                 @if (!$m->borrowing->count() > 0)
-                <x-button class="px-[6px] py-[6px] bg-red-500" onclick="destroyMember('{{$m->id}}', '{{$m->name}}')">
+                <x-button
+                  class="px-[6px] py-[6px] !bg-red-500 shadow-red-500/30 hover:shadow-red-500/50  hover:scale-110"
+                  onclick="destroyMember('{{$m->id}}', '{{$m->name}}')">
                   <x-icons.trash size="5" />
                 </x-button>
                 @endif

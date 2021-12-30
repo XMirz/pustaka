@@ -122,10 +122,9 @@ class BooksSeeder extends Seeder
             'name' => 'Taylor & Francis Inc.',
             'address' => 'Milton Park, Abingdon-on-Thames, Oxfordshire Britania Raya'
         ]);
-
         // book
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 4)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024125189',
             'title' => 'Filosofi Teras',
             'title_description' => 'Filsafat Yunani - Romawi Kuno Untuk Mental Tangguh Masa Kini',
@@ -144,7 +143,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 5)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9794071676',
             'title' => 'Siti Nurbaya ',
             'title_description' => 'Kasih Tak Sampai ',
@@ -163,7 +162,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 1)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9794071773',
             'title' => 'Tata Bahasa Baku Bahasa Indonesia',
             'title_description' => ' ',
@@ -182,7 +181,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 5)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9794180556',
             'title' => 'Tenggelamnya Kapal Van Der Wijck',
             'title_description' => '',
@@ -201,7 +200,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 1)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024271022',
             'title' => 'BG Bahasa Indonesia Kelas XII Kur.2013',
             'title_description' => '',
@@ -220,7 +219,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 1)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024271022',
             'title' => 'Buku Guru Bahasa Indonesia SMA/MA/SMK/MAK Kelas XI',
             'title_description' => '',
@@ -239,7 +238,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 1)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024270995',
             'title' => 'Bahasa Indonesia untuk SMA/MA/SMK/MAK Kelas X',
             'title_description' => '',
@@ -258,7 +257,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 3)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024271107',
             'title' => 'Buku Guru Bahasa Inggris SMA/MA/SMK/MAK Kelas XI',
             'title_description' => '',
@@ -277,7 +276,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 3)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024271138',
             'title' => 'Buku Guru Bahasa Inggris SMA/MA/SMK/MAK Kelas XII',
             'title_description' => '',
@@ -296,7 +295,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 2)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786022987949',
             'title' => 'MATEMATIKA UNTUK SMA/MA KELAS XII',
             'title_description' => '',
@@ -315,7 +314,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 2)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786022989707',
             'title' => 'Bupena Matematika Wajib Untuk SMA/MA Kelas X',
             'title_description' => '',
@@ -334,7 +333,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 6)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9795260898',
             'title' => 'Filsafat pendidikan Islam',
             'title_description' => '',
@@ -353,7 +352,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 4)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9789795189817',
             'title' => 'Filsafat Ilmu',
             'title_description' => 'Perspektif Barat dan Islam',
@@ -372,7 +371,7 @@ class BooksSeeder extends Seeder
         ]);
 
         $book = Book::create([
-            'book_code' => Str::upper(Str::random(8)),
+            'book_code' => Category::firstWhere('id', '=', 4)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786023100002',
             'title' => 'Kerancuan Filsafat',
             'title_description' => 'Tahafut Al-Falasifah',

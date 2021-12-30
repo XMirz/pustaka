@@ -109,11 +109,11 @@
             <td class="px-4 py-3">{{Date('d F Y', strtotime($b->return_date))}}</td>
             <td class="px-4 py-3">
               <div class="flex flex-row justify-center items-center space-x-2">
-                <x-button class="px-[6px] py-[6px] bg-green-500"
+                <x-button class="px-[6px] py-[6px] bg-green-500  hover:scale-110"
                   onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
                   <x-icons.check size="5" />
                 </x-button>
-                <x-button class="px-[6px] py-[6px]"
+                <x-button class="px-[6px] py-[6px]  hover:scale-110"
                   onclick="addMoreDate({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}', '{{$b->return_date}}')">
                   <x-icons.plus size="5" />
                 </x-button>
@@ -195,76 +195,6 @@
 
 
   <x-slot name="script">
-    <script>
-      function bookcodes() {
-        return {
-          bookcode: '',
-          open: false,
-          initialize(value){
-            this.bookcode = value
-          },
-          list: '',
-          select(selectedInput){
-            this.open = false,
-            this.bookcode = selectedInput
-          },
-          async onChange(){
-            if(this.bookcode == '') return;
-            let uri = `{{route('root')}}/ajax/bookcodes/${this.bookcode}`;
-            await fetch(uri)
-            .then((response) => response.json())
-            .then((response) => {
-              let fetchedList = ' ';
-              if(response.length < 1) return;
-              response.forEach(function (element){
-                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                  x-on:click="select('${element.code}')">
-                  ${element.label}
-                </li>`
-              });
-              this.list = fetchedList
-              this.open = true
-            })
-            .catch(err => console.log(err))
-          }
-        }
-      };
-
-      function inputSelect(name) {
-        return {
-          [name]: '',
-          open: false,
-          initialize(value){
-            this[name] = value
-          },
-          list: '',
-          select(selectedInput){
-            this.open = false,
-            this[name] = selectedInput
-          },
-          async onChange(){
-            if(this[name] == '') return;
-            let uri = `{{route('root')}}/ajax/${name}s/${this[name]}`;
-            console.log(uri);
-            await fetch(uri)
-            .then((response) => response.json())
-            .then((response) => {
-              let fetchedList = ' ';
-              if(response.length < 1) return;
-              response.forEach(function (element){
-                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                  x-on:click="select('${element.name}')">
-                  ${element.name}
-                </li>`
-              });
-              this.list = fetchedList
-              this.open = true
-            })
-            .catch(err => console.log(err))
-          }
-        }
-      }
-    </script>
     <script>
       let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       function addMoreDate(borrowingId, title, borrower, currentDate, error = null){
