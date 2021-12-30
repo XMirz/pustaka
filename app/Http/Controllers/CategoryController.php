@@ -15,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::withCount('books')->get();
+        $totalCategories = $categories->count();
+        return view('categories.index', compact('totalTitle', 'totalBooks', 'categories', 'totalCategories'));
     }
 
     /**

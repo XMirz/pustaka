@@ -23,6 +23,9 @@
         <x-nav-item title="Anggota" isActive="{{Request::is('members*')}}" link="{{ route('members.index',)}}">
           <x-icons.people />
         </x-nav-item>
+        <x-nav-item title="Kategory" isActive="{{Request::is('categories*')}}" link="{{ route('categories.index',)}}">
+          <x-icons.category />
+        </x-nav-item>
       </ul>
     </div>
   </div>
