@@ -1,8 +1,4 @@
 <x-dashboard-layout>
-  <x-slot name="head">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-  </x-slot>
-
   <x-slot name="title">Peminjaman</x-slot>
   <div class="flex flex-row  space-x-8">
     <x-cards.total-borrowings totalBorrowedTitle="{{$totalBorrowedTitle ?? 0}}"
@@ -196,7 +192,7 @@
 
   <x-slot name="script">
     <script>
-      let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      // @var token ada di layout induk , dashboard-layout
       function addMoreDate(borrowingId, title, borrower, currentDate, error = null){
         Swal.fire({
           title: 'Perbarui waktu pengembalian',

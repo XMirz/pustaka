@@ -1,7 +1,4 @@
 <x-dashboard-layout>
-  <x-slot name="head">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-  </x-slot>
   <x-slot name="title">Kategory Buku</x-slot>
   <div class="flex flex-row space-x-8">
     <x-cards.total-categories totalCategories="{{$totalCategories ?? 0}}" />
@@ -59,7 +56,7 @@
   </x-section-card>
   <x-slot name="script">
     <script>
-      let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      // @var token ada di layout induk , dashboard-layout
       function destroyCategory(categoryId,name){
         console.log(categoryId)
         Swal.fire({

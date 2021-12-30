@@ -49,7 +49,7 @@ class CategoryController extends Controller
         ]);
         $newCat["category_code"] = Str::upper($newCat["category_code"]);
         Category::create($newCat);
-        return  redirect()->route('books.index');
+        return  redirect()->route('categories.index');
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         ]);
         $newCat["category_code"] = Str::upper($newCat["category_code"]);
         $category->update($newCat);
-        return  redirect()->route('category.index');
+        return  redirect()->route('categories.index');
     }
 
     /**
