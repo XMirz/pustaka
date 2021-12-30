@@ -46,7 +46,7 @@
                 class="flex text-right flex-nowrap whitespace-nowrap">{{$book->stock->stock}}/{{$book->amount}}</span>
             </td>
             <td class="px-4 py-3">
-              <div class="flex flex-row justify-center items-center">
+              <div class="flex flex-row justify-end items-center">
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('books.edit', ['book' => $book->id]) }}">
                   <x-icons.edit size="5" />

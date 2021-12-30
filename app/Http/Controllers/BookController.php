@@ -48,29 +48,7 @@ class BookController extends Controller
   public function store(Request $request)
   {
     // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
-    if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
-      Publisher::create([
-        'name' =>  $request->get('publisher')
-      ]);
-    }
-    // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel authors
-    if (!Author::firstWhere('name', '=', $request->get('author'))) {
-      Author::create([
-        'name' =>  $request->get('author')
-      ]);
-    }
-    // Ambil id penulis dan penerbit
-    $publisherId = Publisher::select('id')->firstWhere('name', '=', $request->get('publisher'))->id;
-    $authorId = Author::select('id')->firstWhere('name', '=', $request->get('author'))->id;
-
-    // Ambil semua input user dan masukkan ke variabel
-    $book = request()->all();
-    // Hapus input publisher dan author karena kita hanya butuh id
-    unset($book['publisher']);
-    unset($book['author']);
-    // Tambah id penerbit dan id penulis ke author
-    $book['publisher_id'] = $publisherId;
-    $book['author_id'] = $authorId;
+    $book = $this->getBook($request);
     Book::create($book); // Simpan ke database
     return redirect()->route('books.index');
   }
@@ -107,7 +85,7 @@ class BookController extends Controller
    */
   public function update(Request $request, Book $book)
   {
-    $totalBorrowed = Borrowing::where('book_id', '=', $book->id)->orWhere('status', '=', 'NOT_RETURNED')->orWhere('status', '=', 'LOST')->sum('amount');
+    $totalBorrowed = Borrowing::where('book_id', '=', $book->id)->where('status', '=', 'NOT_RETURNED')->orWhere('status', '=', 'LOST')->sum('amount');
     $request->validate(
       [
         "amount" => [
@@ -126,29 +104,7 @@ class BookController extends Controller
     );
 
     // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
-    if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
-      Publisher::create([
-        'name' =>  $request->get('publisher')
-      ]);
-    }
-    // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel authors
-    if (!Author::firstWhere('name', '=', $request->get('author'))) {
-      Author::create([
-        'name' =>  $request->get('author')
-      ]);
-    }
-    // Ambil id penulis dan penerbit
-    $publisherId = Publisher::select('id')->firstWhere('name', '=', $request->get('publisher'))->id;
-    $authorId = Author::select('id')->firstWhere('name', '=', $request->get('author'))->id;
-
-    // Ambil semua input user dan masukkan ke variabel
-    $updateRequest = request()->all();
-    // Hapus input publisher dan author karena kita hanya butuh id
-    unset($updateRequest['publisher']);
-    unset($updateRequest['author']);
-    // Tambah id penerbit dan id penulis ke author
-    $updateRequest['publisher_id'] = $publisherId;
-    $updateRequest['author_id'] = $authorId;
+    $updateRequest = $this->getBook($request);
     $book->update($updateRequest); // Simpan ke database
     $targetStock = Stock::firstWhere('book_id', '=', $book->id);
     $targetStock->update([
@@ -166,5 +122,37 @@ class BookController extends Controller
   public function destroy(Book $book)
   {
     //
+  }
+
+  /**
+   * @param Request $request
+   * @return array
+   */
+  public function getBook(Request $request): array
+  {
+    if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
+      Publisher::create([
+        'name' => $request->get('publisher')
+      ]);
+    }
+    // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel authors
+    if (!Author::firstWhere('name', '=', $request->get('author'))) {
+      Author::create([
+        'name' => $request->get('author')
+      ]);
+    }
+    // Ambil id penulis dan penerbit
+    $publisherId = Publisher::select('id')->firstWhere('name', '=', $request->get('publisher'))->id;
+    $authorId = Author::select('id')->firstWhere('name', '=', $request->get('author'))->id;
+
+    // Ambil semua input user dan masukkan ke variabel
+    $book = request()->all();
+    // Hapus input publisher dan author karena kita hanya butuh id
+    unset($book['publisher']);
+    unset($book['author']);
+    // Tambah id penerbit dan id penulis ke author
+    $book['publisher_id'] = $publisherId;
+    $book['author_id'] = $authorId;
+    return $book;
   }
 }

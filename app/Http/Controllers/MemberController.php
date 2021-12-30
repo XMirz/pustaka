@@ -23,13 +23,7 @@ class MemberController extends Controller
 
     public function store(MemberRequest $request)
     {
-        $member = $request->validated();
-        if ($request->get('role') == "Siswa") {
-            $member["nisn"] = $member["code"];
-        } else if ($request->get('role') == "Siswa") {
-            $member["nip"] = $member["code"];
-        }
-        unset($member["code"]);
+        $member = $this->getMemberUpdate($request);
         Member::create($member);
 
         return redirect()->route("members.index");
@@ -48,13 +42,7 @@ class MemberController extends Controller
 
     public function update(MemberRequest $request, Member $member)
     {
-        $memberUpdate = $request->validated();
-        if ($request->get('role') == "Siswa") {
-            $memberUpdate["nisn"] = $memberUpdate["code"];
-        } else if ($request->get('role') == "Siswa") {
-            $memberUpdate["nip"] = $memberUpdate["code"];
-        }
-        unset($memberUpdate["code"]);
+        $memberUpdate = $this->getMemberUpdate($request);
         $member->update($memberUpdate);
         return redirect()->route("members.index");
     }
@@ -64,5 +52,21 @@ class MemberController extends Controller
         $member->delete();
         $response["status"] = "ok";
         return $response;
+    }
+
+    /**
+     * @param MemberRequest $request
+     * @return array
+     */
+    public function getMemberUpdate(MemberRequest $request): array
+    {
+        $memberUpdate = $request->validated();
+        if ($request->get('role') == "Siswa") {
+            $memberUpdate["nisn"] = $memberUpdate["code"];
+        } else if ($request->get('role') == "Guru") {
+            $memberUpdate["nip"] = $memberUpdate["code"];
+        }
+        unset($memberUpdate["code"]);
+        return $memberUpdate;
     }
 }

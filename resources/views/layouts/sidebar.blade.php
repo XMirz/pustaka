@@ -13,15 +13,15 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4 pt-6">
-      <button onclick="addBorrowing()" class="relative bg-white border  border-blue-500 max-w-[3rem] hover:max-w-full hover:grow h-10 overflow-hidden whitespace-nowrap  rounded-md
-      flex flex-row justify-center items-center font-poppins font-medium uppercase tracking-wider shadow-xl
-      shadow-blue-500/30 hover:shadow-blue-500/50 duration-700 origin-right transition-all  group">
-        <x-icons.plus size="5" class="relative my-2 mx-2" />
-        <span class="relative py-2 max-w-none group-hover:max-w-full hidden group-hover:inline-block">Peminjaman
-          Baru</span>
-      </button>
       <div id="nav-item" class="">
-        <ul class="tracking-wider">
+        <ul class="tracking-wider space-y-2">
+          <li class="">
+            <button onclick="addBorrowing()"
+              class="flex flex-row  items-center space-x-4 w-full px-3 py-2 rounded-lg bg-green-600 text-white transition-all outline-none focus:outline-none ">
+              <x-icons.plus></x-icons.plus>
+              <span class="tracking-wider text-base">Peminjaman Baru</span>
+            </button>
+          </li>
           <x-nav-item title="Dashboard" isActive="{{Request::is('dashboard')}}" link="{{ route('dashboard.index') }}">
             <x-icons.dashboard></x-icons.dashboard>
           </x-nav-item>

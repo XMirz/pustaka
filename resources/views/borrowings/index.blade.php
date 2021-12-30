@@ -104,7 +104,7 @@
             <td class="px-4 py-3">{{Date('d F Y', strtotime($b->created_at))}}</td>
             <td class="px-4 py-3">{{Date('d F Y', strtotime($b->return_date))}}</td>
             <td class="px-4 py-3">
-              <div class="flex flex-row justify-center items-center space-x-2">
+              <div class="flex flex-row justify-end items-center space-x-2">
                 <x-button class="px-[6px] py-[6px] bg-green-500  hover:scale-110"
                   onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
                   <x-icons.check size="5" />

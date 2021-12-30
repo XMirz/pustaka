@@ -1,5 +1,5 @@
 @props(["totalCategories" => 0])
-<div id="total-books-card"
+<a href="{{route('categories.index')}}" id=" total-books-card"
   class="flex-grow border border-black/10 bg-white px-8 py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
   <div class="">
     <h2 class="font-bold text-xl text-blue-600">Jumlah Kategory</h2>
@@ -7,7 +7,7 @@
   <div class="flex justify-end">
     <div class="flex flex-col items-end justify-end">
       <div class=" h-full w-12">
-        <x-icons.switch size="12" class="group-hover:text-blue-600" />
+        <x-icons.category size="12" class="group-hover:text-blue-600" />
       </div>
       <h3 class="text-lg font-bold mt-auto mb-0.5 ">
         <span class="text-3xl group-hover:text-blue-600 transition-all">{{$totalCategories ?? 0}}</span> Kategori
@@ -18,4 +18,4 @@
       </h4> --}}
     </div>
   </div>
-</div>
+</a>
