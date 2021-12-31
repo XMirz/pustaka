@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -47,8 +48,13 @@ class BookController extends Controller
    */
   public function store(Request $request)
   {
+
     // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
     $book = $this->getBook($request);
+    $request->file('cover')->store('images/cover');
+    // Store file and save to variable the new generated name
+    $book['cover'] = $request->file('cover')->store('images/cover');
+
     $book = Book::create($book); // Simpan ke database
     Stock::create([
       'book_id' => $book->id,
@@ -106,9 +112,14 @@ class BookController extends Controller
         // "amount." => "Tanggal pengembalian tidak valid"
       ]
     );
-
     // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
-    $updateRequest = $this->getBook($request);
+    $updateRequest = $this->getBook($request, $book);
+    if ($request->file('cover')) {
+      if ($request->cover_old) {
+        Storage::delete($request->cover_old);
+      }
+      $updateRequest['cover'] = $request->file('cover')->store('images/cover');
+    }
     $book->update($updateRequest); // Simpan ke database
     $targetStock = Stock::firstWhere('book_id', '=', $book->id);
     $targetStock->update([
@@ -132,12 +143,29 @@ class BookController extends Controller
    * @param Request $request
    * @return array
    */
-  public function getBook(Request $request): array
+  public function getBook(Request $request, $book = null): array
   {
     $request->validate([
-      'category_id' => 'required'
+      'book_code' => [
+        function ($attribute, $value, $fail) use ($book) {
+          $try = Book::firstWhere('book_code', '=', $value);
+          if ($book == null) {
+            if ($try) {
+              $fail('Kode buku \'' . $value . '\' telah dipakai.');
+            }
+          } else {
+            if ($value != $book->book_code) {
+              $fail('Kode buku \'' . $value . '\' telah dipakai.');
+            }
+          }
+        },
+      ],
+      'category_id' => 'required',
+      'cover' => ['image', 'max:2048'],
     ], [
       'category_id.required' => "Pilih kategory buku.",
+      'cover.max' => "Ukuran cover maksimal 2MB.",
+      'cover.image' => "Cover harus berupa gambar ('jpg','png')"
     ]);
     if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
       Publisher::create([

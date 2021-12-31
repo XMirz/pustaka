@@ -15,6 +15,8 @@ class AddToBooksTable extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->string("title_description")->nullable();
+            $table->string("cover")->nullable();
+            $table->softDeletes();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('author_id')->constrained()->cascadeOnDelete();
             $table->foreignId('publisher_id')->constrained()->cascadeOnDelete();

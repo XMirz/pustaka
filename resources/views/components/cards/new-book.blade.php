@@ -1,22 +1,34 @@
 @props(['book'])
 <div href="{{route('books.index')}}" id=" total-books-card"
-  class="text-lg flex-grow  border border-black/10 bg-white px-8 py-5 rounded-md shadow-sm">
-  <h2 class="font-bold text-xl max-w-fit">{{$book->title}} {{$book->title_description != '' ? '-
-    "'.$book->title_description.'"'
-    :
-    ''}}
-  </h2>
-  <h5 class="">oleh {{$book->author->name}}</h5>
-  <div class="mt-2 leading-5">
-    <h5 class="">
-      <span class="w-36 inline-flex">Jumlah</span>: {{$book->amount}} buku
-    </h5>
-    <h5 class="">
-      <span class="w-36 inline-flex">Penerbit</span>: {{$book->publisher->name}}, {{$book->published_at}}. Tahun
-      {{$book->publication_year}}
-    </h5>
-    <h5 class="">
-      <span class="w-36 inline-flex">Jumlah halaman</span>: {{$book->exemplar}} halaman
-    </h5>
+  class="text-lg flex flex-row gap-4 flex-grow  border border-black/10 bg-white px-8 py-5 rounded-md shadow-sm">
+  <div
+    class=" overflow-hidden flex-shrink-0 h-fit w-24 md:w-32 aspect-[12/16] rounded bg-gray-300 flex items-center justify-center">
+    @if($book->cover)
+    <img class="object-cover h-full" src="{{asset('storage/'.$book->cover)}}" alt="" srcset="">
+    @else
+    <x-icons.books size="12" class=" text-gray-600" />
+    @endif
+  </div>
+  <div class="">
+    <h2 class="font-bold text-xl max-w-lg">{{$book->title}} {{$book->title_description != '' ? '-
+      "'.$book->title_description.'"'
+      :
+      ''}}
+    </h2>
+    <h5 class="">oleh {{$book->author->name}}</h5>
+    <div class="mt-2 leading-5">
+      <h5 class="">
+        <span class="w-20 md:w-36 inline-flex">Jumlah</span>: {{$book->amount}} buku
+      </h5>
+      <h5 class="flex max-w-lg">
+        <span class="w-20 md:w-36 flex-shrink-0">Penerbit</span> :&nbsp;<span class="">{{$book->publisher->name}},
+          {{$book->published_at}}.
+          Tahun
+          {{$book->publication_year}}</span>
+      </h5>
+      <h5 class="">
+        <span class="w-20 md:w-36 inline-flex">Jumlah halaman</span>: {{$book->exemplar}} halaman
+      </h5>
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="relative bg-white w-full h-14 inset-x-0 text-gray-800  py-4 px-6 shadow-md-b">
   <div class=" flex flex-row justify-between md:justify-end">
-    <div class="">
+    <div class="md:hidden">
       <button onclick="showSidebar()" class="">
         <x-icons.menu />
       </button>

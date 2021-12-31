@@ -54,27 +54,7 @@
         @if($results->count() > 0)
         <div class="flex flex-row flex-wrap justify-between gap-4 md:gap-6">
           @foreach($results as $book)
-          <div class=" flex-grow hover:scale-105 md:hover:scale-110 transform transition-transform">
-            <div class="rounded-lg flex-col px-4 md:px-8 py-2 bg-white shadow-md shadow-blue-500/10 ">
-              <h4 class="text-blue-500 font-poppins text-lg">Judul : {{$book->title}}</h4>
-              <h5 class=" font-poppins ">Penulis : {{$book->author->name}}</h5>
-
-              <div class="mt-4">
-                <h6>Kategory : {{$book->category->name}} </h6>
-                <h6>ISBN : {{$book->isbn}} </h6>
-                <h6>Terbitan : {{$book->publisher->name}}, {{$book->published_at}}. Tahun {{$book->publication_year}}
-                  ({{$book->edition ? 'Edisi ke-'.$book->edition : ''}}) </h6>
-                <h6>Jumlah halaman : {{$book->exemplar}} Halaman </h6>
-                <h6>Letak buku : Rak {{$book->category->place}} </h6>
-                <div class="flex flex-col w-full justify-end items-end font-poppins md:font-semibold">
-                  <h6 class="">Kode buku : {{$book->book_code}} </h6>
-                  {!!$book->stock->stock > 0 ? '<h6 class="text-blue-600">Tersedia</h6>' : '<h6 class="text-red-500">
-                    Kosong</h6>'!!}
-
-                </div>
-              </div>
-            </div>
-          </div>
+          <x-cards.front-book :book="$book" />
           @endforeach
         </div>
         @else
