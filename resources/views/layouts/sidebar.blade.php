@@ -21,9 +21,9 @@
         <ul class="tracking-wider space-y-2">
           <li class="">
             <button onclick="addBorrowing()"
-              class="flex flex-row  items-center space-x-4 w-full px-3 py-2 rounded-lg bg-green-600 text-white transition-all outline-none focus:outline-none ">
+              class="flex flex-row fonts items-center space-x-4 w-full px-3 py-2 rounded-lg border border-blue-500 hover:bg-blue-500  hover:text-white transition-all outline-none focus:outline-none ">
               <x-icons.plus></x-icons.plus>
-              <span class="tracking-wider text-base ">Peminjaman Baru</span>
+              <span class="tracking-wider font-semibold text-base ">Peminjaman Baru</span>
             </button>
           </li>
           <x-nav-item title="Dashboard" isActive="{{Request::is('dashboard')}}" link="{{ route('dashboard.index') }}">

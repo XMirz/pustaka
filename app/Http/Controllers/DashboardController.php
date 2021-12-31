@@ -12,11 +12,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
+        $books = Book::latest()->get();
         $totalTitle = $books->count();
         $totalBooks = $books->sum('amount');
 
-        $borrowings = Borrowing::where('status', '=', "NOT_RETURNED");
+        $borrowings = Borrowing::where('status', '=', "NOT_RETURNED")->latest()->get();
         $totalBorrowedTitle = $borrowings->count();
         $totalBorrowedBooks = $borrowings->sum('amount');
 
@@ -25,6 +25,6 @@ class DashboardController extends Controller
 
         $categories = Category::withCount('books')->get();
         $totalCategories = $categories->count();
-        return view('dashboard', compact('totalTitle', 'totalBooks', 'totalBorrowedTitle', 'totalBorrowedBooks', 'totalMembers', 'totalCategories'));
+        return view('dashboard', compact('books', 'totalTitle', 'totalBooks', 'borrowings', 'totalBorrowedTitle', 'totalBorrowedBooks', 'totalMembers', 'totalCategories'));
     }
 }
