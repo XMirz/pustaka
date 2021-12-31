@@ -1,16 +1,15 @@
 <x-dashboard-layout>
   <x-slot name="title">Buku</x-slot>
-  <x-section-header title="Perbarui Data Buku">
-  </x-section-header>
   <x-section-card class="">
+    <x-section-header title="Perbarui buku {{$book->title}}">
+    </x-section-header>
     <div class="">
       <form action="{{route('books.update', ['book' => $book])}}" method="POST">
         @method('PUT')
-        <h4 class="text-xl">Rincian buku</h4>
-        <div class="flex flex-row space-x-8 my-4">
+        <div class="flex flex-col lg:flex-row gap-y-2 lg:gap-x-8 my-4">
           {{-- Form Kiri --}}
-          <div class="flex-1 flex flex-col space-y-4">
-            <div class="flex flex-col space-y-2" x-data="category">
+          <div class="contents flex-1 md:flex flex-col gap-y-4">
+            <div class="flex flex-col gap-y1 md:gap-y-2" x-data="category">
               <x-label for="category_id" :value="__('Kategori')" />
 
               {{-- Custom Select Dropdowm --}}
@@ -35,7 +34,7 @@
               </div>
               {{-- End custom select --}}
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="title" :value="__('Judul buku')" />
               <x-input id="title" name="title" type="text" placeholder="Judul" :value="old('title', $book->title)"
                 required autofocus />
@@ -67,40 +66,40 @@
                 </ul>
               </div>
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="published_at" :value="__('Kota terbit')" />
               <x-input id="published_at" name="published_at" type="text" placeholder="Alamat"
                 :value="old('published_at', $book->published_at )" required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="publication_year" :value="__('Tahun terbit')" />
               <x-input id="publication_year" name="publication_year" type="number" placeholder="Tahun"
                 :value="old('publication_year', $book->publication_year)" required autofocus />
             </div>
           </div>
           {{-- Form Kanan --}}
-          <div class="flex-1 flex flex-col space-y-4">
-            <div class="flex flex-col space-y-2">
+          <div class="contents flex-1 md:flex flex-col gap-y-4">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="book_code" :value="__('Kode buku')" />
               <x-input id="book_code" name="book_code" type="text" placeholder="Kode"
                 :value="old('book_code', $book->book_code)" required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="isbn" :value="__('ISBN')" />
               <x-input id="isbn" name="isbn" type="text" placeholder="ISBN" :value="old('isbn', $book->isbn)" required
                 autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="edition" :value="__('Edisi')" />
               <x-input id="edition" name="edition" type="text" placeholder="Edisi"
                 :value="old('edition', $book->edition)" required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="exemplar" :value="__('Jumlah halaman')" />
               <x-input id="exemplar" name="exemplar" type="number" placeholder="Halaman"
                 :value="old('exemplar', $book->exemplar)" required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="amount" :value="__('Jumlah buku')" />
               <x-input id="amount" name="amount" type="number" placeholder="Jumlah"
                 :value="old('amount', $book->amount)" required autofocus />
@@ -109,7 +108,7 @@
           </div>
         </div>
         @csrf
-        <x-button class="">
+        <x-button class="w-full lg:w-auto justify-center lg:justify-start">
           {{ __('Simpan') }}
         </x-button>
       </form>

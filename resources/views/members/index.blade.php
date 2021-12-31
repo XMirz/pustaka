@@ -27,16 +27,16 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-lg w-full">
+        <tbody class="text-base lg:text-lg w-full leading-5">
           @foreach ($members as $m)
           <tr class="hover:bg-gray-100" data-id="{{$m->id}}">
-            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-3">{{$m->name}}</td>
-            <td class="px-4 py-3">{{$m->gender == 'M' ? 'Laki-laki' : 'Perempuan' }}</td>
-            <td class="px-4 py-3">{{$m->role}}</td>
-            <td class="px-4 py-3">{{$m->nisn ?? $m->nip ?? '-'}}</td>
-            <td class="px-4 py-3">{{$m->address}}</td>
-            <td class="px-4 py-3">
+            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$m->name}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$m->gender == 'M' ? 'Laki-laki' : 'Perempuan' }}</td>
+            <td class="px-4 py-1 lg:py-2">{{$m->role}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$m->nisn ?? $m->nip ?? '-'}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$m->address}}</td>
+            <td class="px-4 py-1 lg:py-2">
               <div class="flex flex-row justify-end items-center space-x-2  ">
                 <x-button-link class="px-[6px] py-[6px] hover:scale-110"
                   link="{{ route('members.edit', ['member' => $m->id]) }}">

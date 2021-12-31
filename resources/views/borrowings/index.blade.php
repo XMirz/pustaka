@@ -14,9 +14,10 @@
 
     </x-section-header>
     <form action="{{route('borrowings.store')}}" method="post">
-      <div class="w-full flex flex-col md:flex-row gap-8 ">
-        <div class="contents gap-8">
-          <div class="relative flex flex-col space-y-2" x-data="bookcodes()">
+      <div class="w-full flex flex-col lg:flex-row gap-y-4 gap-x-8 ">
+        {{-- Right form --}}
+        <div class="contents lg:w-1/2 lg:flex lg:flex-col gap-y-4">
+          <div class="relative flex flex-col space-y-1 md:space-y-2" x-data="bookcodes()">
             <x-label for="book_code" :value="__('Kode buku')" />
             <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
               autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
@@ -48,6 +49,10 @@
               </ul>
             </div>
           </div>
+
+        </div>
+        {{-- Left from --}}
+        <div class="contents lg:w-1/2 lg:flex lg:flex-col gap-y-4">
           <div class="flex flex-col space-y-2">
             <x-label for="return_date" :value="__('Tanggal Pengembalian')" />
             <x-input id="return_date" name="return_date" type="date" :value="old('return_date')" required autofocus />
@@ -55,9 +60,9 @@
           </div>
           <div class="flex flex-col space-y-2">
             <x-label for="amount" :value="__('Jumlah buku')" />
-            <div class="flex flex-row space-x-8">
+            <div class="w-full flex flex-row justify-between gap-x-4 md:gap-x-8">
               <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
-                autofocus autocomplete="off" />
+                autofocus autocomplete="off" class="flex-grow" />
               <x-button class="">
                 {{ __('Simpan') }}
               </x-button>
@@ -67,9 +72,6 @@
             @enderror
           </div>
           @csrf
-        </div>
-        <div class="">
-
         </div>
       </div>
     </form>
@@ -99,17 +101,17 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-lg w-full">
+        <tbody class="text-base lg:text-lg w-full leading-5">
           @foreach ($borrowings as $b)
           <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
-            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-3">{{$b->book->title}}</td>
-            <td class="px-4 py-3">{{$b->book->book_code}}</td>
-            <td class="px-4 py-3">{{$b->member->name}}</td>
-            <td class="px-4 py-3">{{$b->amount}}</td>
-            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->created_at))}}</td>
-            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->return_date))}}</td>
-            <td class="px-4 py-3">
+            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->book->title}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->book->book_code}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->member->name}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->amount}}</td>
+            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->return_date))}}</td>
+            <td class="px-4 py-1 lg:py-2">
               <div class="flex flex-row justify-end items-center space-x-2">
                 <x-button class="px-[6px] py-[6px] bg-green-500  hover:scale-110"
                   onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
@@ -159,16 +161,16 @@
             </th> --}}
           </tr>
         </thead>
-        <tbody id="history" class="text-lg w-full">
+        <tbody id="history" class="text-base lg:text-lg w-full leading-5">
           @foreach ($borrowingsHistory as $b)
           <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
-            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-3">{{$b->book->title}}</td>
-            <td class="px-4 py-3">{{$b->book->book_code}}</td>
-            <td class="px-4 py-3">{{$b->member->name}}</td>
-            <td class="px-4 py-3">{{$b->amount}}</td>
-            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->created_at))}}</td>
-            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->returned_at))}}</td>
+            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->book->title}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->book->book_code}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->member->name}}</td>
+            <td class="px-4 py-1 lg:py-2">{{$b->amount}}</td>
+            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->returned_at))}}</td>
           </tr>
           @endforeach
         </tbody>

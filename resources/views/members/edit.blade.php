@@ -9,13 +9,13 @@
         <div class="flex flex-row space-x-8 my-4">
           {{-- Form Kiri --}}
           <div class="flex-1 flex flex-col space-y-4">
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="name" :value="__('Nama lengkap')" />
               <x-input id="name" name="name" type="text" placeholder="Nama" :value="old('name', $member->name)" required
                 autofocus />
             </div>
 
-            <div class="flex flex-col space-y-2" x-data="status">
+            <div class="flex flex-col gap-y1 md:gap-y-2" x-data="status">
               <x-label for="role" :value="__('Status')" />
               {{-- Custom Select Dropdowm --}}
               <input type="hidden" id="role" name="role" x-model="current" />
@@ -43,13 +43,13 @@
               {{-- End custom select --}}
             </div>
 
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="code" :value="__('NIP/NISN')" />
               <x-input id="code" name="code" type="number" placeholder="NIP/NISN"
                 :value="old('code', $member->nisn ?? $member->nip ?? '')" required autofocus />
             </div>
 
-            <div class="flex flex-col space-y-2" x-data="gender">
+            <div class="flex flex-col gap-y1 md:gap-y-2" x-data="gender">
               <x-label for="gender" :value="__('Jenis Kelamin')" />
               {{-- Custom Select Dropdowm --}}
               <input type="hidden" id="gender" name="gender" x-model="currentId" />
@@ -74,7 +74,7 @@
               {{-- End custom select --}}
             </div>
 
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y1 md:gap-y-2">
               <x-label for="address" :value="__('Alamat')" />
               <x-input id="address" name="address" type="text" placeholder="Alamat"
                 :value="old('address', $member->address)" required autofocus />
@@ -82,7 +82,7 @@
           </div>
         </div>
         @csrf
-        <x-button class="">
+        <x-button class="w-full lg:w-auto justify-center lg:justify-start">
           {{ __('Simpan') }}
         </x-button>
       </form>

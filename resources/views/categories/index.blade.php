@@ -1,6 +1,6 @@
 <x-dashboard-layout>
   <x-slot name="title">Kategory Buku</x-slot>
-  <div class="flex flex-row flex-wrap gap-6 md:gap-8">
+  <div class="flex flex-row flex-wrap gap-4 md:gap-6">
     <x-cards.total-categories totalCategories="{{$totalCategories ?? 0}}" />
     <x-cards.total-books totalTitle="{{$totalTitle ?? 0}}" totalBooks="{{$totalBooks ?? 0}}" />
   </div>
@@ -27,15 +27,15 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-lg w-full">
+        <tbody class="text-base lg:text-lg w-full leading-5">
           @foreach ($categories as $cat)
           <tr class="hover:bg-gray-100">
-            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-2 py-3">{{$cat->name}}</td>
-            <td class="px-2 py-3">Rak {{$cat->place}}</td>
-            <td class="px-2 py-3">{{$cat->books_count}} judul</td>
-            <td class="px-2 py-3">{{$cat->books_count}} buku</td>
-            <td class="px-2 py-3">
+            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
+            <td class="px-2 py-1 lg:py-2">{{$cat->name}}</td>
+            <td class="px-2 py-1 lg:py-2">Rak {{$cat->place}}</td>
+            <td class="px-2 py-1 lg:py-2">{{$cat->books_count}} judul</td>
+            <td class="px-2 py-1 lg:py-2">{{$cat->books->sum('amount')}} buku</td>
+            <td class="px-2 py-1 lg:py-2">
               <div class="flex flex-row justify-center items-center space-x-2 ">
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('categories.edit', ['category' => $cat->id]) }}">

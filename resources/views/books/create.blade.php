@@ -1,21 +1,20 @@
 <x-dashboard-layout>
   <x-slot name="title">Buku</x-slot>
-  <x-section-header title="Tambah Buku">
-  </x-section-header>
   <x-section-card class="">
+    <x-section-header title="Tambah Buku">
+    </x-section-header>
     <div class="">
       <form action="{{route('books.store')}}" method="POST">
-        <h4 class="text-xl">Rincian buku</h4>
-        <div class="flex flex-row space-x-8 my-4">
+        <div class="flex flex-col lg:flex-row gap-y-2 lg:gap-x-8 my-4">
           {{-- Form Kiri --}}
-          <div class="flex-1 flex flex-col space-y-4">
-            <div class="flex flex-col space-y-2" x-data="category">
+          <div class="contents flex-1 md:flex flex-col gap-y-4">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2" x-data="category">
               <x-label for="category_id" :value="__('Kategori')" />
 
               {{-- Custom Select Dropdowm --}}
               <input type="hidden" id="category_id" name="category_id" x-model="currentId" />
               <div class="relative">
-                <button type="button" @click="open=true"
+                <button type="button" x-on:click="open=true"
                   class="relative  text-left w-full px-3 py-[9px] ring-1 ring-gray-300 hover:ring-blue-500  focus:ring-2 focus:ring-blue-500 rounded-md transition"
                   x-text="current">
                 </button>
@@ -34,7 +33,7 @@
               </div>
               {{-- End custom select --}}
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="title" :value="__('Judul buku')" />
               <x-input id="title" name="title" type="text" placeholder="Judul" :value="old('title')" required
                 autofocus />
@@ -66,39 +65,39 @@
                 </ul>
               </div>
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="published_at" :value="__('Kota terbit')" />
               <x-input id="published_at" name="published_at" type="text" placeholder="Alamat"
                 :value="old('published_at')" required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="publication_year" :value="__('Tahun terbit')" />
               <x-input id="publication_year" name="publication_year" type="number" placeholder="Tahun"
                 :value="old('publication_year')" required autofocus />
             </div>
           </div>
           {{-- Form Kanan --}}
-          <div class="flex-1 flex flex-col space-y-4">
-            <div class="flex flex-col space-y-2">
+          <div class="contents flex-1 md:flex flex-col gap-y-4">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="book_code" :value="__('Kode buku')" />
               <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
                 autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="isbn" :value="__('ISBN')" />
               <x-input id="isbn" name="isbn" type="text" placeholder="ISBN" :value="old('isbn')" required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="edition" :value="__('Edisi')" />
               <x-input id="edition" name="edition" type="text" placeholder="Edisi" :value="old('edition')" required
                 autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="exemplar" :value="__('Jumlah halaman')" />
               <x-input id="exemplar" name="exemplar" type="number" placeholder="Halaman" :value="old('exemplar')"
                 required autofocus />
             </div>
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col gap-y-1 lg:gap-y-2">
               <x-label for="amount" :value="__('Jumlah buku')" />
               <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
                 autofocus />
@@ -106,7 +105,7 @@
           </div>
         </div>
         @csrf
-        <x-button class="">
+        <x-button class="w-full lg:w-auto justify-center lg:justify-start">
           {{ __('Simpan') }}
         </x-button>
       </form>
