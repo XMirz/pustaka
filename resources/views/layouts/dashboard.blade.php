@@ -93,6 +93,55 @@
     </div>
   </div>
 
+
+  <script>
+    // function for delete instance  , used in members,books,
+    // @var token ada di layout induk , dashboard-layout
+    function deleteRow(routes, id , title, subtitle, successTitle, successSubtitle ){
+      Swal.fire({
+        title: title,
+        text: subtitle,
+        icon: 'warning',
+        showCancelButton: true,
+        customClass: {
+          confirmButton: "font-poppins font-medium uppercase tracking-wider",
+          cancelButton: "font-poppins font-medium uppercase tracking-wider"
+        },
+        confirmButtonColor: '#22C55E',
+        cancelButtonColor: '#ef4444',
+        confirmButtonText: 'Konfirmasi',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          url = '{{route('root')}}/'+routes+'/'+id;
+          fetch(url, {
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json, text-plain, */*",
+              "X-Requested-With": "XMLHttpRequest",
+              "X-CSRF-TOKEN": token
+              },
+            method: 'DELETE',
+          })
+          .then(res => res.json())
+          .then(res=> {
+            if(res.status == 'ok'){
+              Swal.fire({
+                allowOutsideClick: false,
+                title: successTitle,
+                text: successSubtitle,
+                icon:'success'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.reload();
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  </script>
   <script>
     // sidebar
     let sidebar = document.querySelector('#sidebar');
@@ -103,7 +152,6 @@
       sidebar.classList.remove('-translate-x-full');
     };
     function checkWindowSize() {
-      console.log(window.matchMedia('(min-width: 768px)'));
       if (window.matchMedia('(min-width: 768px)').matches) showSidebar();
       else closeSidebar()
     };

@@ -46,11 +46,19 @@
                 class="flex text-right flex-nowrap whitespace-nowrap">{{$book->stock->stock}}/{{$book->amount}}</span>
             </td>
             <td class="px-4 py-1 lg:py-2">
-              <div class="flex flex-row justify-end items-center">
+              <div class="flex flex-row justify-end items-center space-x-2  ">
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('books.edit', ['book' => $book->id]) }}">
                   <x-icons.edit size="5" />
                 </x-button-link>
+                @if (!$book->borrowings->where('status', '=', 'NOT_RETURNED' )->count() >
+                0)
+                <x-button
+                  class="px-[6px] py-[6px] !bg-red-500 shadow-red-500/30 hover:shadow-red-500/50  hover:scale-110"
+                  onclick="deleteRow('books','{{$book->id}}','Hapus {{$book->title}}?' , 'Yakin ingin menghapus buku {{$book->title}}?','Berhasil dihapus', 'Buku {{$book->title}} telah dihapus!' )">
+                  <x-icons.trash size="5" />
+                </x-button>
+                @endif
               </div>
             </td>
           </tr>

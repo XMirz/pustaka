@@ -46,7 +46,7 @@
                 0)
                 <x-button
                   class="px-[6px] py-[6px] !bg-red-500 shadow-red-500/30 hover:shadow-red-500/50  hover:scale-110"
-                  onclick="destroyMember('{{$m->id}}', '{{$m->name}}')">
+                  onclick="deleteRow('members','{{$m->id}}','Hapus {{$m->name}}?' , 'Hapus {{$m->name}} dari anggota perpustakaan?','Berhasil dihapus', '{{$m->name}} telah dihapus!' )">
                   <x-icons.trash size="5" />
                 </x-button>
                 @endif
@@ -67,53 +67,6 @@
 
 
   <x-slot name="script">
-    <script>
-      // @var token ada di layout induk , dashboard-layout
-      function destroyMember(memberId,name){
-        console.log(memberId)
-        Swal.fire({
-          title: 'Hapus '+name+ '?',
-          text: 'Hapus '+name+ ' dari anggota perpustakaan?',
-          icon: 'warning',
-          showCancelButton: true,
-          customClass: {
-            confirmButton: "font-poppins font-medium uppercase tracking-wider",
-            cancelButton: "font-poppins font-medium uppercase tracking-wider"
-          },
-          confirmButtonColor: '#22C55E',
-          cancelButtonColor: '#ef4444',
-          confirmButtonText: 'Konfirmasi',
-          cancelButtonText: 'Batal'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            url = '{{route('root')}}/members/'+memberId;
-            fetch(url, {
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json, text-plain, */*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token
-                },
-              method: 'DELETE',
-            })
-            .then(res => res.json())
-            .then(res=> {
-              if(res.status == 'ok'){
-                Swal.fire({
-                  allowOutsideClick: false,
-                  title: 'Berhasil',
-                  text: name+ ' dihapus',
-                  icon:'success'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    window.location.reload();
-                  }
-                })
-              }
-            })
-          }
-        })
-      }
-    </script>
+
   </x-slot>
 </x-dashboard-layout>

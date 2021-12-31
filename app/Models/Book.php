@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
     // Eager load relationship
@@ -28,5 +29,9 @@ class Book extends Model
     public function publisher()
     {
         return $this->belongsTo(Publisher::class);
+    }
+    public function borrowings()
+    {
+        return $this->hasMany(Borrowing::class);
     }
 }

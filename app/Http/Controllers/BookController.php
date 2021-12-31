@@ -128,15 +128,16 @@ class BookController extends Controller
     return redirect()->route('books.index')->with('type', 'success')->with('message', 'Buku \'' . $book->title . '\' berhasil diperbarui!');
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\Models\Book  $book
-   * @return \Illuminate\Http\Response
-   */
+
   public function destroy(Book $book)
   {
-    //
+    if ($book->status != 'NOT_RETURNED') {
+      $book->delete();
+      $response["status"] = "ok";
+    } else {
+      $response["status"] = "failed";
+    };
+    return $response;
   }
 
   /**
