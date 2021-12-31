@@ -11,7 +11,6 @@
           <div class="contents flex-1 md:flex flex-col gap-y-4">
             <div class="flex flex-col gap-y1 md:gap-y-2" x-data="category">
               <x-label for="category_id" :value="__('Kategori')" />
-
               {{-- Custom Select Dropdowm --}}
               <div class="relative">
                 <input type="hidden" id="category_id" name="category_id" x-model="currentId" />
