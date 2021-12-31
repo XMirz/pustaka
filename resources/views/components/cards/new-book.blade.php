@@ -1,6 +1,6 @@
 @props(['book'])
 <div href="{{route('books.index')}}" id=" total-books-card"
-  class="text-lg flex-grow  border border-black/10 bg-white px-8 py-5 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
+  class="text-lg flex-grow  border border-black/10 bg-white px-8 py-5 rounded-md shadow-sm">
   <h2 class="font-bold text-xl max-w-fit">{{$book->title}} {{$book->title_description != '' ? '-
     "'.$book->title_description.'"'
     :

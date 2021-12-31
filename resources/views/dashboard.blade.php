@@ -12,7 +12,7 @@
   {{-- --}}
   <x-section-header title="Peminjaman buku terbaru">
   </x-section-header>
-  <div class="flex flex-row flex-wrap gap-4 md:gap-6">
+  <div class="flex flex-row flex-wrap gap-2">
     @foreach ($borrowings as $b)
     @if(!($loop->iteration > 4))
     <x-cards.new-borrowing :borrowing="$b" />
@@ -23,7 +23,7 @@
   {{-- --}}
   <x-section-header title="Buku terbaru">
   </x-section-header>
-  <div class="flex flex-row flex-wrap gap-4 md:gap-6">
+  <div class="flex flex-row flex-wrap gap-2 ">
     @foreach ($books as $b)
     @if(!($loop->iteration > 4))
     <x-cards.new-book :book="$b" />

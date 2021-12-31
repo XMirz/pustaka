@@ -18,6 +18,7 @@
                   class="relative  text-left w-full px-3 py-[9px] ring-1 ring-gray-300 hover:ring-blue-500  focus:ring-2 focus:ring-blue-500 rounded-md transition"
                   x-text="current">
                 </button>
+                <x-validation-error field="category_id" />
                 <div @click.outside="open = false"
                   class="absolute z-10 top-11 right-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
                   x-show="open">
@@ -43,7 +44,7 @@
               <x-label for="author" :value="__('Penulis')" />
               <x-input id="author" name="author" type="text" placeholder="Penulis" :value="old('author')" required
                 autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.500="onChange()"
-                x-model="author" />
+                x-model="author" x-init="initialize('{{old('author')}}')" />
               {{-- Untuk dropdown penulis --}}
               <div @click.outside="open = false"
                 class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
@@ -56,7 +57,7 @@
               <x-label for="publisher" :value="__('Penerbit')" />
               <x-input id="publisher" name="publisher" type="text" placeholder="Penerbit" :value="old('publisher')"
                 required autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
-                x-model="publisher" />
+                x-model="publisher" x-init="initialize('{{old('publisher')}}')" />
               {{-- Untuk dropdown penerbit --}}
               <div @click.outside="open = false"
                 class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
@@ -130,6 +131,9 @@
           [name]: '',
           open: false,
           list: '',
+          initialize(value){
+            this[name] = value
+          },
           select(selectedInput){
             this.open = false,
             this[name] = selectedInput

@@ -61,7 +61,7 @@ class BorrowingController extends Controller
 			"stock" => ($targetStock->stock - $newBorrowing->amount)
 		]);
 
-		return redirect()->route('borrowings.index');
+		return redirect()->route('borrowings.index')->with('type', 'success')->with('message', 'Peminjaman baru telah ditambahkan!');
 	}
 
 	/**

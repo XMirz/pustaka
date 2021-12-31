@@ -42,14 +42,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $newCat = $request->validate([
+        $newCatData = $request->validate([
             "name" => "required|unique:categories,name",
             "category_code" => "required|unique:categories,category_code",
             "place" => "required",
         ]);
-        $newCat["category_code"] = Str::upper($newCat["category_code"]);
-        Category::create($newCat);
-        return  redirect()->route('categories.index');
+        $newCatData["category_code"] = Str::upper($newCatData["category_code"]);
+        $newCat = Category::create($newCatData);
+        return  redirect()->route('categories.index')->with('type', 'success')->with('message', 'Kategori \'' . $newCat->name . '\' telah ditambahkan!');
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         ]);
         $newCat["category_code"] = Str::upper($newCat["category_code"]);
         $category->update($newCat);
-        return  redirect()->route('categories.index');
+        return  redirect()->route('categories.index')->with('type', 'success')->with('message', 'Kategori \'' . $category->name . '\' telah diperbarui!');
     }
 
     /**

@@ -24,9 +24,9 @@ class MemberController extends Controller
     public function store(MemberRequest $request)
     {
         $member = $this->getMemberUpdate($request);
-        Member::create($member);
+        $member = Member::create($member);
 
-        return redirect()->route("members.index");
+        return redirect()->route("members.index")->with('type', 'success')->with('message', '\'' . $member->name . '\' berhasil tambahkan!');
     }
 
 
@@ -44,7 +44,7 @@ class MemberController extends Controller
     {
         $memberUpdate = $this->getMemberUpdate($request);
         $member->update($memberUpdate);
-        return redirect()->route("members.index");
+        return redirect()->route("members.index")->with('type', 'success')->with('message', 'Data \'' . $member->name . '\' berhasil perbarui!');
     }
 
     public function destroy(Member $member)

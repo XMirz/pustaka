@@ -49,8 +49,12 @@ class BookController extends Controller
   {
     // Cek jika penulis yang diinputkan user suda ada atau belum, jika belum, maka masukkan ke tabel publishers
     $book = $this->getBook($request);
-    Book::create($book); // Simpan ke database
-    return redirect()->route('books.index');
+    $book = Book::create($book); // Simpan ke database
+    Stock::create([
+      'book_id' => $book->id,
+      'stock' => $book->amount
+    ]);
+    return redirect()->route('books.index')->with('type', 'success')->with('message', 'Buku \'' . $book->title . '\' berhasil ditambahkan!');
   }
 
   /**
@@ -110,7 +114,7 @@ class BookController extends Controller
     $targetStock->update([
       "stock" => ($book->amount - $totalBorrowed)
     ]);
-    return redirect()->route('books.index');
+    return redirect()->route('books.index')->with('type', 'success')->with('message', 'Buku \'' . $book->title . '\' berhasil diperbarui!');
   }
 
   /**
@@ -130,6 +134,11 @@ class BookController extends Controller
    */
   public function getBook(Request $request): array
   {
+    $request->validate([
+      'category_id' => 'required'
+    ], [
+      'category_id.required' => "Pilih kategory buku.",
+    ]);
     if (!Publisher::firstWhere('name', '=', $request->get('publisher'))) {
       Publisher::create([
         'name' => $request->get('publisher')

@@ -34,6 +34,7 @@
         <div class="pt-8">
           <h1 class="font-semibold font-poppins tracking-widest text-gray-700 text-3xl">{{$title ?? ''}}</h1>
         </div>
+        <x-flash-message />
         {{ $slot }}
       </main>
     </div>
@@ -108,6 +109,11 @@
     };
     window.onresize = checkWindowSize;
     window.onload = checkWindowSize;
+
+    function closeMessage(){
+      let flashMessage = document.querySelector('#flashMessage');
+      flashMessage.remove();
+    };
   </script>
   <script>
     function bookcodes() {
