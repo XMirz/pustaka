@@ -49,8 +49,12 @@ class MemberController extends Controller
 
     public function destroy(Member $member)
     {
-        $member->delete();
-        $response["status"] = "ok";
+        if ($member->borrowing()->where('status', '=', 'NOT_RETURNED')->doesntExist()) {
+            $member->delete();
+            $response["status"] = "ok";
+        } else {
+            $response["status"] = "failed";
+        };
         return $response;
     }
 
