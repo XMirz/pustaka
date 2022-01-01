@@ -30,9 +30,10 @@
     @include('layouts.sidebar')
     <div class="h-screen w-full overflow-x-auto">
       @include('layouts.navbar')
-      <main class="relative h-[calc(100vh-56px)] px-8 space-y-6 pb-8 overflow-y-auto">
+      <main class="relative h-[calc(100vh-56px)] px-4 md:px-8 space-y-6 pb-8 overflow-y-auto">
         <div class="pt-8">
-          <h1 class="font-semibold font-poppins tracking-widest text-gray-700 text-3xl">{{$title ?? ''}}</h1>
+          <h1 class="font-semibold font-poppins tracking-wider md:tracking-widest text-gray-700 text-2xl md:text-3xl">
+            {{$title ?? ''}}</h1>
         </div>
         <x-flash-message />
         {{ $slot }}

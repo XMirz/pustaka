@@ -17,12 +17,12 @@
       <table class="w-full">
         <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-2 py-3">Nama</th>
-            <th class="px-2 py-3">Tempat</th>
-            <th class="px-2 py-3">Jumlah judul</th>
-            <th class="px-2 py-3">Jumlah buku</th>
-            <th scope="col" class="relative px-4 py-1 w-12 ">
+            <th>#</th>
+            <th>Nama</th>
+            <th>Tempat</th>
+            <th>Jumlah judul</th>
+            <th>Jumlah buku</th>
+            <th scope="col" class="relative">
               <span class="sr-only">Edit</span>
             </th>
           </tr>
@@ -30,12 +30,12 @@
         <tbody class="text-base lg:text-lg w-full leading-5">
           @foreach ($categories as $cat)
           <tr class="hover:bg-gray-100">
-            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
-            <td class="px-2 py-1 lg:py-2">{{$cat->name}}</td>
-            <td class="px-2 py-1 lg:py-2">Rak {{$cat->place}}</td>
-            <td class="px-2 py-1 lg:py-2">{{$cat->books_count}} judul</td>
-            <td class="px-2 py-1 lg:py-2">{{$cat->books->sum('amount')}} buku</td>
-            <td class="px-2 py-1 lg:py-2">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$cat->name}}</td>
+            <td>Rak {{$cat->place}}</td>
+            <td>{{$cat->books_count}} judul</td>
+            <td>{{$cat->books->sum('amount')}} buku</td>
+            <td>
               <div class="flex flex-row justify-center items-center space-x-2 ">
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('categories.edit', ['category' => $cat->id]) }}">
