@@ -131,7 +131,7 @@ class BookController extends Controller
 
   public function destroy(Book $book)
   {
-    if ($book->status != 'NOT_RETURNED') {
+    if ($book->borrowings()->where('status', '=', 'NOT_RETURNED')->doesntExist()) {
       $book->delete();
       $response["status"] = "ok";
     } else {
