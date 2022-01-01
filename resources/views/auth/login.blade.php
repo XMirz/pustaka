@@ -1,5 +1,5 @@
 <x-guest-layout>
-  <x-slot name="title">{{request('title') ? 'Cari Buku - ' : ''}}Perpustakaan SMK Telkom</x-slot>
+  <x-slot name="title">Masuk - Perpustakaan SMK Telkom</x-slot>
   <div class="relative h-screen overflow-y-auto xl:pt-6 flex flex-col">
 
     <div class="flex flex-col  gap-y-12">
