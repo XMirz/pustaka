@@ -5,7 +5,7 @@
   <h4 class="text-xl ">oleh {{$borrowing->member->name}}</h4>
   <div class="text-lg mt-2 leading-5">
     <h4 class="">
-      <span class="w-48 inline-flex">Jumlah</span>: {{$borrowing->member->name}}
+      <span class="w-48 inline-flex">Jumlah</span>: {{$borrowing->amount}}
     </h4>
     <h4 class="">
       <span class="w-48 inline-flex">Tanggal pengembalian</span>: {{Date('d F Y', strtotime($borrowing->return_date))}}
