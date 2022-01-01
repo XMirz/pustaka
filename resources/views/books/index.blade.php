@@ -17,35 +17,35 @@
     </x-section-header>
     <div class="overflow-x-auto">
       <table class="w-full">
-        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+        <thead class="table-head">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Judul</th>
-            <th class="px-4 py-3">Kode buku</th>
-            <th class="px-4 py-3">ISBN</th>
-            <th class="px-4 py-3">Penulis</th>
-            <th class="px-4 py-3">Penerbit</th>
-            <th class="px-4 py-3">Alamat penerbit</th>
-            <th class="px-4 py-3">Stok</th>
-            <th scope=" col" class="relative px-4 py-1">
+            <th>#</th>
+            <th>Judul</th>
+            <th>Kode buku</th>
+            <th>ISBN</th>
+            <th>Penulis</th>
+            <th>Penerbit</th>
+            <th>Alamat penerbit</th>
+            <th>Stok</th>
+            <th scope=" col" class="relative">
               <span class="sr-only">Edit</span>
             </th>
           </tr>
         </thead>
-        <tbody class="text-base lg:text-lg w-full leading-5">
+        <tbody class="table-body">
           @foreach ($books as $book)
-          <tr class="hover:bg-gray-100">
-            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$book->title}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$book->book_code}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$book->isbn}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$book->author->name}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$book->publisher->name}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$book->published_at}}</td>
-            <td class="px-4 py-1 lg:py-2"><span
+          <tr class="">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$book->title}}</td>
+            <td>{{$book->book_code}}</td>
+            <td>{{$book->isbn}}</td>
+            <td>{{$book->author->name}}</td>
+            <td>{{$book->publisher->name}}</td>
+            <td>{{$book->published_at}}</td>
+            <td><span
                 class="flex text-right flex-nowrap whitespace-nowrap">{{$book->stock->stock}}/{{$book->amount}}</span>
             </td>
-            <td class="px-4 py-1 lg:py-2">
+            <td>
               <div class="flex flex-row justify-end items-center space-x-2  ">
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('books.edit', ['book' => $book->id]) }}">

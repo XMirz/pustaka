@@ -88,31 +88,31 @@
     <div class="overflow-x-auto">
       @if($borrowings->count() > 0)
       <table class="w-full">
-        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+        <thead class="table-head">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Judul</th>
-            <th class="px-4 py-3">Kode buku</th>
-            <th class="px-4 py-3">Nama peminjam</th>
-            <th class="px-4 py-3">Jumlah</th>
-            <th class="px-4 py-3">Tanggal peminjaman</th>
-            <th class="px-4 py-3">Batas pengembalian</th>
-            <th scope=" col" class="relative px-4 py-1">
+            <th>#</th>
+            <th>Judul</th>
+            <th>Kode buku</th>
+            <th>Nama peminjam</th>
+            <th>Jumlah</th>
+            <th>Tanggal peminjaman</th>
+            <th>Batas pengembalian</th>
+            <th scope=" col" class="relative ">
               <span class="sr-only">Edit</span>
             </th>
           </tr>
         </thead>
-        <tbody class="text-base lg:text-lg w-full leading-5">
+        <tbody class="table-body">
           @foreach ($borrowings as $b)
-          <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
-            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->book->title}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->book->book_code}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->member->name}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->amount}}</td>
-            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->created_at))}}</td>
-            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->return_date))}}</td>
-            <td class="px-4 py-1 lg:py-2">
+          <tr data-id="{{$b->id}}">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$b->book->title}}</td>
+            <td>{{$b->book->book_code}}</td>
+            <td>{{$b->member->name}}</td>
+            <td>{{$b->amount}}</td>
+            <td>{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td>{{Date('d F Y', strtotime($b->return_date))}}</td>
+            <td>
               <div class="flex flex-row justify-end items-center space-x-2">
                 <x-button class="px-[6px] py-[6px] bg-green-500  hover:scale-110"
                   onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
@@ -148,30 +148,27 @@
     <div class="overflow-x-auto">
       @if($borrowingsHistory->count() > 0)
       <table class="w-full">
-        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+        <thead class="table-head">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Judul</th>
-            <th class="px-4 py-3">Kode buku</th>
-            <th class="px-4 py-3">Nama peminjam</th>
-            <th class="px-4 py-3">Jumlah</th>
-            <th class="px-4 py-3">Tanggal peminjaman</th>
-            <th class="px-4 py-3">Tanggal pengembalian</th>
-            {{-- <th scope=" col" class="relative px-4 py-1">
-              <span class="sr-only">Edit</span>
-            </th> --}}
+            <th>#</th>
+            <th>Judul</th>
+            <th>Kode buku</th>
+            <th>Nama peminjam</th>
+            <th>Jumlah</th>
+            <th>Tanggal peminjaman</th>
+            <th>Tanggal dikembalikan</th>
           </tr>
         </thead>
-        <tbody id="history" class="text-base lg:text-lg w-full leading-5">
+        <tbody id="history" class="table-body">
           @foreach ($borrowingsHistory as $b)
           <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
-            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->book->title}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->book->book_code}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->member->name}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$b->amount}}</td>
-            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->created_at))}}</td>
-            <td class="px-4 py-1 lg:py-2">{{Date('d F Y', strtotime($b->returned_at))}}</td>
+            <td>{{$loop->iteration}}</td>
+            <td>{{$b->book->title}}</td>
+            <td>{{$b->book->book_code}}</td>
+            <td>{{$b->member->name}}</td>
+            <td>{{$b->amount}}</td>
+            <td>{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td>{{Date('d F Y', strtotime($b->returned_at))}}</td>
           </tr>
           @endforeach
         </tbody>

@@ -6,7 +6,7 @@
   <x-section-card class="">
     <x-section-header title="Anggota perpustakaan">
       <div class="flex flex-row justify-around items-center">
-        <x-button-link title="Tambah Anggota" link="{{ route('members.create') }}">
+        <x-button-link title="Tambah" link="{{ route('members.create') }}">
           <x-icons.plus size="5" />
         </x-button-link>
       </div>
@@ -14,29 +14,29 @@
     <div class="overflow-x-auto">
       @if($members->count() > 0)
       <table class="w-full">
-        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+        <thead class="table-head">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Nama</th>
-            <th class="px-4 py-3">Jenis kelamin</th>
-            <th class="px-4 py-3">Status</th>
-            <th class="px-4 py-3">NISN / NIP</th>
-            <th class="px-4 py-3">Alamat</th>
-            <th scope=" col" class="relative px-4 py-1">
+            <th class="">#</th>
+            <th class="">Nama</th>
+            <th class="">Jenis kelamin</th>
+            <th class="">Status</th>
+            <th class="">NISN / NIP</th>
+            <th class="">Alamat</th>
+            <th scope=" col" class="relative">
               <span class="sr-only">Edit</span>
             </th>
           </tr>
         </thead>
-        <tbody class="text-base lg:text-lg w-full leading-5">
+        <tbody class="table-body">
           @foreach ($members as $m)
-          <tr class="hover:bg-gray-100" data-id="{{$m->id}}">
-            <td class="px-0 py-1 lg:py-2 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$m->name}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$m->gender == 'M' ? 'Laki-laki' : 'Perempuan' }}</td>
-            <td class="px-4 py-1 lg:py-2">{{$m->role}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$m->nisn ?? $m->nip ?? '-'}}</td>
-            <td class="px-4 py-1 lg:py-2">{{$m->address}}</td>
-            <td class="px-4 py-1 lg:py-2">
+          <tr data-id="{{$m->id}}">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$m->name}}</td>
+            <td>{{$m->gender == 'M' ? 'Laki-laki' : 'Perempuan' }}</td>
+            <td>{{$m->role}}</td>
+            <td>{{$m->nisn ?? $m->nip ?? '-'}}</td>
+            <td>{{$m->address}}</td>
+            <td>
               <div class="flex flex-row justify-end items-center space-x-2  ">
                 <x-button-link class="px-[6px] py-[6px] hover:scale-110"
                   link="{{ route('members.edit', ['member' => $m->id]) }}">
