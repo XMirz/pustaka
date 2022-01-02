@@ -31,23 +31,13 @@ class BookController extends Controller
     return view('books.index', compact('books', 'totalTitle', 'totalBooks', 'categories', 'totalCategories'));
   }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
   public function create()
   {
     $categories = Category::all();
     return view('books.create', compact('categories'));
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
+
   public function store(Request $request)
   {
 
@@ -65,12 +55,6 @@ class BookController extends Controller
     return redirect()->route('books.index')->with('type', 'success')->with('message', 'Buku \'' . $book->title . '\' berhasil ditambahkan!');
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Models\Book  $book
-   * @return \Illuminate\Http\Response
-   */
   public function show(Book $book)
   {
     $bookCard = new FrontBook($book);
@@ -79,25 +63,12 @@ class BookController extends Controller
     return $response;
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  \App\Models\Book  $book
-   * @return \Illuminate\Http\Response
-   */
   public function edit(Book $book)
   {
     $categories = Category::all();
     return view('books.edit', compact('book', 'categories'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Book  $book
-   * @return \Illuminate\Http\Response
-   */
   public function update(Request $request, Book $book)
   {
     $totalBorrowed = Borrowing::where('book_id', '=', $book->id)->where('status', '=', 'NOT_RETURNED')->orWhere('status', '=', 'LOST')->sum('amount');
@@ -145,10 +116,6 @@ class BookController extends Controller
     return $response;
   }
 
-  /**
-   * @param Request $request
-   * @return array
-   */
   public function getBook(Request $request, $book = null): array
   {
     $request->validate([
