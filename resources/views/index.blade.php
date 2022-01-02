@@ -1,10 +1,10 @@
 <x-guest-layout>
   <x-slot name="title">{{request('title') ? 'Cari Buku - ' : ''}}Perpustakaan SMK Telkom</x-slot>
-  <div class="relative h-screen overflow-y-auto xl:pt-12 flex flex-col">
+  <div id="container" class="relative h-screen overflow-y-auto xl:pt-12 flex flex-col">
 
     <div class="flex flex-col  gap-y-12">
       <div class="px-4 md:px-8 xl:px-32 gap-y-16">
-        <div class="flex justify-start py-4 scale-95 md:scale-100">
+        <div id="wrapper-logo" class="flex justify-start py-4 scale-95 md:scale-100">
           <a href="{{route('root')}}" class=" flex flex-row items-center space-x-4 justify-center ">
             <div class="w-14 h-14">
               <x-icons.app />
@@ -16,14 +16,14 @@
           </a>
         </div>
         <div class="w-full md:w-3/5 xl:w-1/2 mt-4 md:mt-8 xl:mt-12 font-poppins flex flex-col md:space-y-4">
-          <h1 id="texthero" class="relative font-bold text-3xl md:text-5xl xl:text-7xl img-shadow">Sistem
+          <h1 id="title" id="texthero" class="relative font-bold text-3xl md:text-5xl xl:text-7xl img-shadow">Sistem
             Informasi Perpustakaan Digital
           </h1>
-          <h3 class="font-medium  md:font-semibold text-2xl xl:text-4xl">SMK Telkom Pekanbaru</h3>
-          <div class="w-4/5 md:w-1/2 flex self-end md:absolute right-0 md:top-24 xl:top-12 ">
+          <h3 id="company" class="font-medium  md:font-semibold text-2xl xl:text-4xl">SMK Telkom Pekanbaru</h3>
+          <div id="hero-image" class="w-4/5 md:w-1/2 flex self-end md:absolute right-0 md:top-24 xl:top-12 ">
             <img class="img-shadow" src="{{asset('img/hero.webp')}}" alt="" srcset="">
           </div>
-          <div class="w-full md:w-2/3 pt-8">
+          <div id="hero-search" class="w-full md:w-2/3 pt-8">
             <form action="{{route('root')}}" method="GET">
               <h4 class="text-blue-600 font-semibold text-lg md:text-2xl md:my-4">Cari buku</h4>
               <div

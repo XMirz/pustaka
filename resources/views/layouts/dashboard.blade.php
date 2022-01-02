@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
   <!-- Scripts -->
-
+  <script src="https://unpkg.com/scrollreveal"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   {{$head ?? ''}}
@@ -30,7 +30,7 @@
     @include('layouts.sidebar')
     <div class="h-screen w-full overflow-x-auto">
       @include('layouts.navbar')
-      <main class="relative h-[calc(100vh-56px)] px-4 md:px-8 space-y-6 pb-8 overflow-y-auto">
+      <main id="container" class="relative h-[calc(100vh-56px)] px-4 md:px-8 space-y-6 pb-8 overflow-y-auto">
         <div class="pt-8">
           <h1 class="font-semibold font-poppins tracking-wider md:tracking-widest text-gray-700 text-2xl md:text-3xl">
             {{$title ?? ''}}</h1>
@@ -96,6 +96,29 @@
 
 
   <script>
+    const sr = ScrollReveal();
+    config = {
+      container : '#container',
+      distance: '2rem',
+      origin: 'bottom',
+      duration: 1000,
+      interval: 200,
+    };
+    sr.reveal('#nav-item ul > li', {
+      ...config,
+      duration: 500,
+      interval: 100,
+      distance: '0.25rem',
+      container: '#sidebar'
+    });
+    sr.reveal('.total-card', config);
+    sr.reveal('.card-section', config);
+    sr.reveal('.card-dashboard', {
+      ...config,
+      reset: true
+    }); // Targeting new borrowing and news book cards
+  </script>
+  <script>
     // function for delete instance  , used in members,books,
     // @var token ada di layout induk , dashboard-layout
     function deleteRow(routes, id , title, subtitle, successTitle, successSubtitle ){
@@ -153,8 +176,8 @@
       sidebar.classList.remove('-translate-x-full');
     };
     function checkWindowSize() {
-      if (window.matchMedia('(min-width: 768px)').matches) showSidebar();
-      else closeSidebar()
+      if (!window.matchMedia('(min-width: 768px)').matches) closeSidebar();
+      else showSidebar()
     };
     window.onresize = checkWindowSize;
     window.onload = checkWindowSize;
