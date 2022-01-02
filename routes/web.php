@@ -24,7 +24,7 @@ Route::get('/', function () {
     // Jika ada request parameter 'title', maka ambil db dan return ke view
     // query 'title' di convert ke low case, karen PostgreSql case sensitife dari default
     if (request('title')) {
-        $results = Book::latest()->whereRaw('LOWER(`title`) LIKE ?', ['%' . strtolower(request('title')) . '%'])->limit(16)->get();
+        $results = Book::latest()->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower(request('title')) . '%'])->limit(16)->get();
         return view('index', compact('results'));
     } else {
     }
