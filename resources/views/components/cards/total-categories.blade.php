@@ -1,6 +1,6 @@
 @props(["totalCategories" => 0])
-<a href="{{route('categories.index')}}" id=" total-books-card"
-  class="flex-grow border border-black/10 bg-white px-4 md:px-8 py-3 md:py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
+<a href="{{route('categories.index')}}"
+  class="total-card flex-grow border border-black/10 bg-white px-4 md:px-8 py-3 md:py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
   <div class="">
     <h2 class="font-bold text-lg md:text-xl text-blue-600">Jumlah Kategory</h2>
   </div>
