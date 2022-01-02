@@ -47,6 +47,13 @@
             </td>
             <td>
               <div class="flex flex-row justify-end items-center space-x-2  ">
+                {{-- Show --}}
+                <x-button
+                  class="px-[6px] py-[6px] bg-gray-500 shadow-gray-500/30 hover:shadow-gray-500/50  hover:scale-110"
+                  onclick="showBook('{{$book->id}}')">
+                  <x-icons.eye size="5" />
+                </x-button>
+
                 <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
                   link="{{ route('books.edit', ['book' => $book->id]) }}">
                   <x-icons.edit size="5" />
@@ -67,4 +74,40 @@
       </table>
     </div>
   </x-section-card>
+  {{-- Modal template --}}
+  <x-slot name="modal">
+    {{-- Loading --}}
+    <div id="spinner" class="flex justify-center items-center overflow-hidden">
+      <div class="w-12 h-12 border-4 animate-spin border-gray-300 border-t-4 border-t-blue-500 rounded-full"></div>
+    </div>
+    {{-- Book Card --}}
+  </x-slot>
+  <x-slot name="script">
+    <script>
+      let spinner = document.querySelector('#spinner').outerHTML;
+      async function showBook(id){
+        let url = '{{route('root')}}/books/'+id;
+        let swal = Swal;
+        swal.fire({
+            // title: '',
+            html: spinner,
+            showCancelButton: false,
+            showConfirmButton: false,
+        });
+        fetch(url)
+        .then(res => res.json())
+        .then(res => {
+          if(res.status == 'ok'){
+            console.log(res);
+            swal.fire({
+              width: 'auto',
+              html: res.html,
+              showCancelButton: false,
+              showConfirmButton: false,
+            });
+          }
+        });
+      };
+    </script>
+  </x-slot>
 </x-dashboard-layout>
