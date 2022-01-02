@@ -8,8 +8,10 @@ use App\Models\Borrowing;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Stock;
+use App\View\Components\FrontBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use View;
 
 class BookController extends Controller
 {
@@ -71,7 +73,10 @@ class BookController extends Controller
    */
   public function show(Book $book)
   {
-    //
+    $bookCard = new FrontBook($book);
+    $response["status"] = 'ok';
+    $response["html"] = $bookCard->render()->with($bookCard->data())->render();
+    return $response;
   }
 
   /**
