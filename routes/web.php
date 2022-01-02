@@ -21,24 +21,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // Jika ada request parameter 'title', maka ambil db dan return ke view
+    // query 'title' di convert ke low case, karen PostgreSql case sensitife dari default
     if (request('title')) {
-        $results = Book::latest()->where('title', 'like', '%' . request('title') . '%')->limit(16)->get();
+        $results = Book::latest()->whereRaw('LOWER(`title`) LIKE ?', ['%' . strtolower(request('title')) . '%'])->limit(16)->get();
         return view('index', compact('results'));
     } else {
     }
     return view('index');
 })->name('root');
 
-// Route::get('/find', function () {
-//     return view('index');
-// })->name('root.search');
-
 Route::group(["middleware" => "auth"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('books', BookController::class);
-    Route::resource('borrowings', BorrowingController::class);
-    Route::resource('members', MemberController::class);
-    Route::resource('categories', CategoryController::class);
+    Route::resource('borrowings', BorrowingController::class)->except(['create', 'show', 'edit', 'destroy']);
+    Route::resource('members', MemberController::class)->except('show');
+    Route::resource('categories', CategoryController::class)->except('show');
 });
 
 
