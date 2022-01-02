@@ -1,8 +1,12 @@
 <x-dashboard-layout>
   <x-slot name="title">Buku</x-slot>
-  <div class="flex flex-row space-x-8">
+  <div class="flex flex-row flex-wrap gap-4 md:gap-6">
     <x-cards.total-books totalTitle="{{$totalTitle ?? 0}}" totalBooks="{{$totalBooks ?? 0}}" />
+    <x-cards.total-categories totalCategories="{{$totalCategories ?? 0}}" />
   </div>
+
+
+
   <x-section-card class="">
     <x-section-header title="Daftar Buku">
       <div class="flex flex-row justify-around items-center">
@@ -13,38 +17,48 @@
     </x-section-header>
     <div class="overflow-x-auto">
       <table class="w-full">
-        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+        <thead class="table-head">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Judul</th>
-            <th class="px-4 py-3">Kode buku</th>
-            <th class="px-4 py-3">ISBN</th>
-            <th class="px-4 py-3">Penulis</th>
-            <th class="px-4 py-3">Penerbit</th>
-            <th class="px-4 py-3">Alamat penerbit</th>
-            <th class="px-4 py-3">Stok/Total</th>
-            <th scope=" col" class="relative px-4 py-1">
+            <th>#</th>
+            <th>Judul</th>
+            <th>Kode buku</th>
+            <th>ISBN</th>
+            <th>Penulis</th>
+            <th>Penerbit</th>
+            <th>Alamat penerbit</th>
+            <th>Stok</th>
+            <th scope=" col" class="relative">
               <span class="sr-only">Edit</span>
             </th>
           </tr>
         </thead>
-        <tbody class="text-lg w-full">
+        <tbody class="table-body">
           @foreach ($books as $book)
-          <tr class="hover:bg-gray-100">
-            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-3">{{$book->title}}</td>
-            <td class="px-4 py-3">{{$book->book_code}}</td>
-            <td class="px-4 py-3">{{$book->isbn}}</td>
-            <td class="px-4 py-3">{{$book->author->name}}</td>
-            <td class="px-4 py-3">{{$book->publisher->name}}</td>
-            <td class="px-4 py-3">{{$book->published_at}}</td>
-            <td class="px-4 py-3"><span class="block text-right ">{{$book->stock->stock}}/{{$book->amount}}</span>
+          <tr class="">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$book->title}}</td>
+            <td>{{$book->book_code}}</td>
+            <td>{{$book->isbn}}</td>
+            <td>{{$book->author->name}}</td>
+            <td>{{$book->publisher->name}}</td>
+            <td>{{$book->published_at}}</td>
+            <td><span
+                class="flex text-right flex-nowrap whitespace-nowrap">{{$book->stock->stock}}/{{$book->amount}}</span>
             </td>
-            <td class="px-4 py-3">
-              <div class="flex flex-row justify-center items-center">
-                <x-button-link class="px-[6px] py-[6px]" link="{{ route('books.edit', ['book' => $book->id]) }}">
+            <td>
+              <div class="flex flex-row justify-end items-center space-x-2  ">
+                <x-button-link class="px-[6px] py-[6px]  hover:scale-110"
+                  link="{{ route('books.edit', ['book' => $book->id]) }}">
                   <x-icons.edit size="5" />
                 </x-button-link>
+                @if (!$book->borrowings->where('status', '=', 'NOT_RETURNED' )->count() >
+                0)
+                <x-button
+                  class="px-[6px] py-[6px] !bg-red-500 shadow-red-500/30 hover:shadow-red-500/50  hover:scale-110"
+                  onclick="deleteRow('books','{{$book->id}}','Hapus {{$book->title}}?' , 'Yakin ingin menghapus buku {{$book->title}}?','Berhasil dihapus', 'Buku {{$book->title}} telah dihapus!' )">
+                  <x-icons.trash size="5" />
+                </x-button>
+                @endif
               </div>
             </td>
           </tr>

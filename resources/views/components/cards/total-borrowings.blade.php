@@ -1,8 +1,8 @@
 @props(["totalBorrowedTitle" => 0, "totalBorrowedBooks" => 0])
-<div id="total-books-card"
-  class="w-64 bg-white px-8 py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
+<a href="{{route('borrowings.index')}}" id=" total-books-card"
+  class="flex-grow border border-black/10 bg-white px-4 md:px-8 py-3 md:py-4 rounded-md shadow-sm hover:shadow-2xl transition-shadow group">
   <div class="">
-    <h2 class="font-bold text-xl text-blue-600">Total Peminjaman</h2>
+    <h2 class="font-bold text-lg md:text-xl text-blue-600">Total Peminjaman</h2>
   </div>
   <div class="flex justify-end">
     <div class="flex flex-col items-end justify-end">
@@ -18,4 +18,4 @@
       </h4>
     </div>
   </div>
-</div>
+</a>

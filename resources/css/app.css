@@ -1,3 +1,30 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer utilities {
+    .img-shadow {
+        filter: drop-shadow(0 25px 25px rgb(59 130 246 / 0.4));
+    }
+    table .table-head {
+        @apply border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center;
+    }
+    table .table-head tr th:first-child {
+        @apply pl-2 pt-0 pb-2 text-right;
+    }
+    table .table-head tr th:not(:first-child) {
+        @apply px-2 pt-0 pb-2;
+    }
+    table .table-body {
+        @apply text-base lg:text-lg w-full leading-5;
+    }
+    table .table-body tr {
+        @apply hover:bg-gray-100;
+    }
+    table .table-body tr td:first-child {
+        @apply pl-4 py-1 lg:py-2 text-center;
+    }
+    table .table-body tr td:not(:first-child) {
+        @apply px-2 py-1 lg:py-2;
+    }
+}

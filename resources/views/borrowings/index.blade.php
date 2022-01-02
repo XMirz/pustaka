@@ -1,10 +1,7 @@
 <x-dashboard-layout>
-  <x-slot name="head">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-  </x-slot>
-
   <x-slot name="title">Peminjaman</x-slot>
-  <div class="flex flex-row space-x-8">
+
+  <div class="flex flex-row  space-x-8">
     <x-cards.total-borrowings totalBorrowedTitle="{{$totalBorrowedTitle ?? 0}}"
       totalBorrowedBooks="{{$totalBorrowedBooks ?? 0}}" />
   </div>
@@ -15,60 +12,68 @@
           <x-icons.plus size="5" />
         </x-button-link> --}}
       </div>
+
     </x-section-header>
     <form action="{{route('borrowings.store')}}" method="post">
-      <div class="w-full flex flex-row space-x-8 ">
-        <div class="relative flex flex-col space-y-2" x-data="bookcodes()">
-          <x-label for="book_code" :value="__('Kode buku')" />
-          <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
-            autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
-            x-model="bookcode" x-init="initialize('{{old('book_code' )}}')" />
-          @error('book_code')
-          <span class="text-red-500">{{$message}}</span>
-          @enderror
-          {{-- Untuk dropdown peminjam --}}
-          <div @click.outside="open = false"
-            class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
-            x-show="open">
-            <ul class="" x-html="list">
-            </ul>
+      <div class="w-full flex flex-col lg:flex-row gap-y-4 gap-x-8 ">
+        {{-- Right form --}}
+        <div class="contents lg:w-1/2 lg:flex lg:flex-col gap-y-4">
+          <div class="relative flex flex-col space-y-1 md:space-y-2" x-data="bookcodes()">
+            <x-label for="book_code" :value="__('Kode buku')" />
+            <x-input id="book_code" name="book_code" type="text" placeholder="Kode" :value="old('book_code')" required
+              autofocus autocomplete="off" x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()"
+              x-model="bookcode" x-init="initialize('{{old('book_code' )}}')" />
+            @error('book_code')
+            <span class="text-red-500">{{$message}}</span>
+            @enderror
+            {{-- Untuk dropdown peminjam --}}
+            <div @click.outside="open = false"
+              class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
+              x-show="open">
+              <ul class="" x-html="list">
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="relative flex flex-col space-y-2 flex-grow" x-data="inputSelect('member')">
-          <x-label for="borrower" :value="__('Nama Peminjam')" />
-          <x-input id="borrower" name="borrower" type="text" placeholder="Nama" required autofocus autocomplete="off"
-            x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()" x-model="member"
-            x-init="initialize('{{old('borrower')}}')" />
-          @error('borrower')
-          <span class="text-red-500">{{$message}}</span>
-          @enderror
-          {{-- Untuk dropdown peminjam --}}
-          <div @click.outside="open = false"
-            class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
-            x-show="open">
-            <ul class="" x-html="list">
-            </ul>
+          <div class="relative flex flex-col space-y-2 flex-grow" x-data="inputSelect('member')">
+            <x-label for="borrower" :value="__('Nama Peminjam')" />
+            <x-input id="borrower" name="borrower" type="text" placeholder="Nama" required autofocus autocomplete="off"
+              x-on:keyup="open = false" x-on:keyup.debounce.750="onChange()" x-model="member"
+              x-init="initialize('{{old('borrower')}}')" />
+            @error('borrower')
+            <span class="text-red-500">{{$message}}</span>
+            @enderror
+            {{-- Untuk dropdown peminjam --}}
+            <div @click.outside="open = false"
+              class="absolute block z-10 top-[calc(100%-0.5rem)] inset-x-0 bg-white shadow-lg rounded-md overflow-hidden ring-1 ring-black ring-opacity-5 py-1"
+              x-show="open">
+              <ul class="" x-html="list">
+              </ul>
+            </div>
           </div>
+
         </div>
-        <div class="flex flex-col space-y-2">
-          <x-label for="return_date" :value="__('Tanggal Pengembalian')" />
-          <x-input id="return_date" name="return_date" type="date" :value="old('return_date')" required autofocus />
-          <x-validation-error field="return_date" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <x-label for="amount" :value="__('Jumlah buku')" />
-          <div class="flex flex-row space-x-8">
-            <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
-              autofocus autocomplete="off" />
-            <x-button class="">
-              {{ __('Simpan') }}
-            </x-button>
+        {{-- Left from --}}
+        <div class="contents lg:w-1/2 lg:flex lg:flex-col gap-y-4">
+          <div class="flex flex-col space-y-2">
+            <x-label for="return_date" :value="__('Tanggal Pengembalian')" />
+            <x-input id="return_date" name="return_date" type="date" :value="old('return_date')" required autofocus />
+            <x-validation-error field="return_date" />
           </div>
-          @error('amount')
-          <span class="text-red-500">{{$message}}</span>
-          @enderror
+          <div class="flex flex-col space-y-2">
+            <x-label for="amount" :value="__('Jumlah buku')" />
+            <div class="w-full flex flex-row justify-between gap-x-4 md:gap-x-8">
+              <x-input id="amount" name="amount" type="number" placeholder="Jumlah" :value="old('amount')" required
+                autofocus autocomplete="off" class="flex-grow" />
+              <x-button class="">
+                {{ __('Simpan') }}
+              </x-button>
+            </div>
+            @error('amount')
+            <span class="text-red-500">{{$message}}</span>
+            @enderror
+          </div>
+          @csrf
         </div>
-        @csrf
       </div>
     </form>
   </x-section-card>
@@ -81,46 +86,99 @@
       </div>
     </x-section-header>
     <div class="overflow-x-auto">
+      @if($borrowings->count() > 0)
       <table class="w-full">
-        <thead class="border-b border-gray-200 uppercase tracking-wider font-poppins font-semibold text-center">
+        <thead class="table-head">
           <tr class="">
-            <th class="px-0 pb-3">#</th>
-            <th class="px-4 py-3">Judul</th>
-            <th class="px-4 py-3">Kode buku</th>
-            <th class="px-4 py-3">Nama peminjam</th>
-            <th class="px-4 py-3">Jumlah</th>
-            <th class="px-4 py-3">Tanggal peminjaman</th>
-            <th class="px-4 py-3">Tanggal pengembalian</th>
-            <th scope=" col" class="relative px-4 py-1">
+            <th>#</th>
+            <th>Judul</th>
+            <th>Kode buku</th>
+            <th>Nama peminjam</th>
+            <th>Jumlah</th>
+            <th>Tanggal peminjaman</th>
+            <th>Batas pengembalian</th>
+            <th scope=" col" class="relative ">
               <span class="sr-only">Edit</span>
             </th>
           </tr>
         </thead>
-        <tbody class="text-lg w-full">
+        <tbody class="table-body">
           @foreach ($borrowings as $b)
-          <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
-            <td class="px-0 py-3 text-center">{{$loop->iteration}}</td>
-            <td class="px-4 py-3">{{$b->book->title}}</td>
-            <td class="px-4 py-3">{{$b->book->book_code}}</td>
-            <td class="px-4 py-3">{{$b->member->name}}</td>
-            <td class="px-4 py-3">{{$b->amount}}</td>
-            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->created_at))}}</td>
-            <td class="px-4 py-3">{{Date('d F Y', strtotime($b->return_date))}}</td>
-            <td class="px-4 py-3">
-              <div class="flex flex-row justify-center items-center space-x-2">
-                <x-button class="px-[6px] py-[6px] bg-green-500"
+          <tr data-id="{{$b->id}}">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$b->book->title}}</td>
+            <td>{{$b->book->book_code}}</td>
+            <td>{{$b->member->name}}</td>
+            <td>{{$b->amount}}</td>
+            <td>{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td>{{Date('d F Y', strtotime($b->return_date))}}</td>
+            <td>
+              <div class="flex flex-row justify-end items-center space-x-2">
+                <x-button class="px-[6px] py-[6px] bg-green-500  hover:scale-110"
                   onclick="returnBook({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}')">
                   <x-icons.check size="5" />
                 </x-button>
-                <x-button-link class="px-[6px] py-[6px]" link="{{ route('borrowings.edit', ['borrowing' => $b->id]) }}">
-                  <x-icons.edit size="5" />
-                </x-button-link>
+                <x-button class="px-[6px] py-[6px]  hover:scale-110"
+                  onclick="addMoreDate({{$b->id}},'{{$b->book->title}}', '{{$b->member->name}}', '{{$b->return_date}}')">
+                  <x-icons.plus size="5" />
+                </x-button>
               </div>
             </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+      @else
+      <div class="flex flex-col justify-center items-center space-y-4">
+        <x-icons.cross-circle size="12" />
+        <h4 class="text-xl">Tidak ada peminjaman berlangsung</h4>
+      </div>
+      @endif
+    </div>
+  </x-section-card>
+
+  <x-section-card class="">
+    <x-section-header title="Riwayat peminjaman">
+      <div class=" flex flex-row justify-around items-center">
+        {{-- <x-button-link title="Tambah" link="{{ route('borrowings.create') }}">
+          <x-icons.plus size="5" />
+        </x-button-link> --}}
+      </div>
+    </x-section-header>
+    <div class="overflow-x-auto">
+      @if($borrowingsHistory->count() > 0)
+      <table class="w-full">
+        <thead class="table-head">
+          <tr class="">
+            <th>#</th>
+            <th>Judul</th>
+            <th>Kode buku</th>
+            <th>Nama peminjam</th>
+            <th>Jumlah</th>
+            <th>Tanggal peminjaman</th>
+            <th>Tanggal dikembalikan</th>
+          </tr>
+        </thead>
+        <tbody id="history" class="table-body">
+          @foreach ($borrowingsHistory as $b)
+          <tr class="hover:bg-gray-100" data-id="{{$b->id}}">
+            <td>{{$loop->iteration}}</td>
+            <td>{{$b->book->title}}</td>
+            <td>{{$b->book->book_code}}</td>
+            <td>{{$b->member->name}}</td>
+            <td>{{$b->amount}}</td>
+            <td>{{Date('d F Y', strtotime($b->created_at))}}</td>
+            <td>{{Date('d F Y', strtotime($b->returned_at))}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+      @else
+      <div class="flex flex-col justify-center items-center space-y-4">
+        <x-icons.cross-circle size="12" />
+        <h4 class="text-xl">Tidak ada riwayat peminjaman</h4>
+      </div>
+      @endif
     </div>
   </x-section-card>
 
@@ -140,77 +198,71 @@
 
   <x-slot name="script">
     <script>
-      function bookcodes() {
-        return {
-          bookcode: '',
-          open: false,
-          initialize(value){
-            this.bookcode = value
+      // @var token ada di layout induk , dashboard-layout
+      function addMoreDate(borrowingId, title, borrower, currentDate, error = null){
+        Swal.fire({
+          title: 'Perbarui waktu pengembalian',
+          html: ''+
+            '<div class="flex flex-col items-center justify-center py-1 space-y-4">'+
+              '<div class="flex flex-col">'+
+                '<span> Judul : '+title+'</span>'+
+                '<span> Peminjam : '+borrower+'</span>'+
+                '<span> Tanggal pengembalian : '+currentDate+'</span>'+
+              '</div>'+
+                '<input type="date" id="update_return_date" name="return_date" value="'+currentDate+'" class="block w-1/2 rounded-md outline-none border-1 border-gray-300 hover:border-blue-500 focus:border-blue-500 transition-all"></input>'+
+                (error ? '<span class="text-red-500">' : '') + (error ? error : '') + (error ? '</span>' : '') +
+            '</div>',
+          icon: 'warning',
+          showCancelButton: true,
+          customClass: {
+            confirmButton: "font-poppins font-medium uppercase tracking-wider",
+            cancelButton: "font-poppins font-medium uppercase tracking-wider"
           },
-          list: '',
-          select(selectedInput){
-            this.open = false,
-            this.bookcode = selectedInput
-          },
-          async onChange(){
-            if(this.bookcode == '') return;
-            let uri = `{{route('root')}}/ajax/bookcodes/${this.bookcode}`;
-            await fetch(uri)
-            .then((response) => response.json())
-            .then((response) => {
-              let fetchedList = ' ';
-              if(response.length < 1) return;
-              response.forEach(function (element){
-                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                  x-on:click="select('${element.code}')">
-                  ${element.label}
-                </li>`
-              });
-              this.list = fetchedList
-              this.open = true
+          confirmButtonColor: '#22C55E',
+          cancelButtonColor: '#ef4444',
+          confirmButtonText: 'Konfirmasi',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            url = '{{route('root')}}/borrowings/'+borrowingId;
+            let returndate = document.querySelector('#update_return_date').value;
+            console.log(returndate);
+            fetch(url, {
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+              method: 'PUT',
+              body: JSON.stringify({
+                '_token': token,
+                'return_date' : returndate
+              })
             })
-            .catch(err => console.log(err))
+            .then(res => res.json())
+            .then(res=> {
+              // console.log(res);
+              if(res.status == 'ok'){
+                Swal.fire({
+                  title: 'Berhasil',
+                  text: 'Tanggal pengembalian diperpanjang',
+                  icon:'success',
+                  closeOnClickOutside: false
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.reload();
+                  }
+                })
+              } else {
+                addMoreDate(borrowingId, title, borrower, returndate, res.message);
+              }
+            })
           }
-        }
+        });
       };
-      function inputSelect(name) {
-        return {
-          [name]: '',
-          open: false,
-          initialize(value){
-            this[name] = value
-          },
-          list: '',
-          select(selectedInput){
-            this.open = false,
-            this[name] = selectedInput
-          },
-          async onChange(){
-            if(this[name] == '') return;
-            let uri = `{{route('root')}}/ajax/${name}s/${this[name]}`;
-            console.log(uri);
-            await fetch(uri)
-            .then((response) => response.json())
-            .then((response) => {
-              let fetchedList = ' ';
-              if(response.length < 1) return;
-              response.forEach(function (element){
-                fetchedList += `<li class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                  x-on:click="select('${element.name}')">
-                  ${element.name}
-                </li>`
-              });
-              this.list = fetchedList
-              this.open = true
-            })
-            .catch(err => console.log(err))
-          }
-        }
-      }
-    </script>
-    <script>
+
       function returnBook(borrowingId,title, borrower){
-        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         console.log(borrowingId)
         Swal.fire({
           title: 'Konfirmasi pengembalian?',
@@ -241,16 +293,20 @@
             .then(res=> {
               // console.log(res);
               if(res.status == 'ok'){
-                let selector = "[data-id='"+borrowingId+"']";
-                document.querySelector(selector).remove();
-                Swal.fire(
-                  'Berhasil',
-                  'Pengembalian tersimpan',
-                  'success'
-                )
+                // let selector = "[data-id='"+borrowingId+"']";
+                // $returnedElement = document.querySelector(selector);
+                // document.querySelector('#history').append($returnedElement);
+                Swal.fire({
+                  title: 'Berhasil',
+                  text: 'Pengembalian tersimpan',
+                  icon:'success'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.reload();
+                  }
+                })
               }
             })
-            
           }
         })
       }

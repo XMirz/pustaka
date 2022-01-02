@@ -16,7 +16,7 @@ class MemberFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'role' => Arr::first(Arr::shuffle(["STUDENT", "TEACHER", "STAFF"])),
+            'role' => Arr::first(Arr::shuffle(["Siswa", "Guru", "Karyawan"])),
             'nisn' => $this->faker->isbn13(),
             'gender' => Arr::first(Arr::shuffle(['M', 'F'])),
             'address' => $this->faker->address(),

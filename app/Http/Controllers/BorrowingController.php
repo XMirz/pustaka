@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BorrowingStoreRequest;
 use App\Models\Borrowing;
 use App\Models\Stock;
 use App\Models\Book;
 use App\Models\Member;
+use Carbon\Carbon;
 use Date;
 use Illuminate\Http\Request;
 
@@ -19,9 +21,10 @@ class BorrowingController extends Controller
 	public function index()
 	{
 		$borrowings = Borrowing::where('status', '=', "NOT_RETURNED")->get();
+		$borrowingsHistory = Borrowing::where('status', '=', "RETURNED")->get();
 		$totalBorrowedTitle = $borrowings->count();
 		$totalBorrowedBooks = $borrowings->sum('amount');
-		return view('borrowings.index', compact('borrowings', 'totalBorrowedTitle', 'totalBorrowedBooks'));
+		return view('borrowings.index', compact('borrowings', 'borrowingsHistory', 'totalBorrowedTitle', 'totalBorrowedBooks'));
 	}
 
 	/**
@@ -40,34 +43,9 @@ class BorrowingController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(BorrowingStoreRequest $request)
 	{
-		$request->validate(
-			[
-				"book_code" => ["required", "exists:books,book_code"],
-				"borrower" => ["required", "exists:members,name"],
-				"amount" => [
-					"required",
-					function ($attribute, $value, $fail) use ($request) {
-						$targetBook = Book::firstWhere('book_code', '=', $request->get('book_code'));
-						if ($value < 1) {
-							$fail('Jumlah buku minimal 1');
-						} else if ($targetBook != null && $value > $targetBook->stock->stock) {
-							$fail('Jumlah melebihi stok (' . $targetBook->stock->stock . ')');
-						}
-					},
-				],
-				"return_date" => [
-					"required",
-					"after_or_equal:now",
-				]
-			],
-			[
-				"book_code.exists" => "Kode buku salah",
-				"borrower.exists" => "Nama peminjam tidak valid",
-				"return_date.after_or_equal" => "Tanggal pengembalian tidak valid"
-			]
-		);
+		$request->validated();
 		$targetBook = Book::firstWhere('book_code', '=', $request->get('book_code'));
 		$targetStock = $targetBook->stock;
 		$targetMember = Member::firstWhere('name', '=', $request->get('borrower'));
@@ -83,7 +61,7 @@ class BorrowingController extends Controller
 			"stock" => ($targetStock->stock - $newBorrowing->amount)
 		]);
 
-		return redirect()->route('borrowings.index');
+		return redirect()->route('borrowings.index')->with('type', 'success')->with('message', 'Peminjaman baru telah ditambahkan!');
 	}
 
 	/**
@@ -117,7 +95,7 @@ class BorrowingController extends Controller
 	 */
 	public function update(Request $request, Borrowing $borrowing)
 	{
-		if (Request::METHOD_PATCH) {
+		if ($request->isMethod(Request::METHOD_PATCH)) {
 			$borrowing->update([
 				"returned_at" => now(),
 				"status" => "RETURNED"
@@ -131,10 +109,19 @@ class BorrowingController extends Controller
 			if ($borrowing->wasChanged(["status", "returned_at"]))  $response["status"] = "ok";
 			else $$response["status"] = "failed";
 			return $response;
-		} else {
-			return [
-				"status" => "DONTKNOW",
-			];
+		} else if ($request->isMethod(Request::METHOD_PUT)) {
+			if (!Carbon::createFromDate($request->return_date)->greaterThanOrEqualTo(now())) {
+				$response["status"] = "failed";
+				$response["message"] = "Tanggal pengembalian tidak valid";
+				return $response;
+			}
+			$borrowing->update([
+				"return_date" => $request->get('return_date'),
+			]);
+			$response = [];
+			if ($borrowing->wasChanged(["return_date"]))  $response["status"] = "ok";
+			else $response["status"] = "failed";
+			return $response;
 		}
 	}
 
