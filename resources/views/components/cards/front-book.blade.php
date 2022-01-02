@@ -23,7 +23,7 @@
         <span class="w-20 md:w-36 inline-flex">Kategory</span>: {{$book->category->name}}
       </h5>
       <h5 class="leading-5">
-        <span class="w-20 md:w-36 inline-flex">Penulis</span>: {{$book->isbn}}
+        <span class="w-20 md:w-36 inline-flex">ISBN</span>: {{$book->isbn}}
       </h5>
       <h5 class="leading-5 flex max-w-lg">
         <span class="w-20 md:w-36 flex-shrink-0">Terbitan</span> :&nbsp;<span class="">{{$book->publisher->name}},
