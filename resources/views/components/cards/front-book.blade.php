@@ -1,9 +1,5 @@
 @props(['book'])
-<<<<<<< HEAD
-<div href="{{route('books.index')}}" id=" total-books-card"
-=======
-<div id="card-book" href="{{route('books.index')}}" id=" total-books-card"
->>>>>>> master
+<div id="card-book" href="{{route('books.index')}}"
   class=" flex flex-row gap-4 flex-grow text-left border border-black/10 bg-white px-4 md:px-8 py-4 md:py-6 rounded-md shadow-sm">
   <div
     class=" overflow-hidden flex-shrink-0 h-fit w-24 md:w-32 aspect-[12/16] rounded bg-gray-300 flex items-center justify-center">
