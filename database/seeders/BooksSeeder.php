@@ -20,9 +20,14 @@ class BooksSeeder extends Seeder
     public function run()
     {
         // Category
+<<<<<<< HEAD
+        $name = ["Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Filsafat", "Novel", "Agama", "Umum"];
+        $code = ["BI", "MT", "EN", "FS", "NV", "AG", "UM"];
+=======
         $name = ["Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Filsafat", "Fiksi", "Agama", "Umum"];
         $code = ["BI", "MT", "EN", "FS", "FK", "AG", "UM"];
         $place = [1, 2, 3, 4, 5, 6, 7];
+>>>>>>> 3839fc5fc768a47cf150b10c4851b05917f8e4cf
         for ($i = 0; $i < count($name); $i++) {
             $cat = new Category();
             $cat->name = $name[$i];
@@ -80,6 +85,18 @@ class BooksSeeder extends Seeder
         Author::create([
             'name' => 'Imam Al Algazali',
         ]);
+// id =13
+        Author::create([
+            'name' => 'Nurcholish Madjid',
+        ]);
+// id =14
+        Author::create([
+            'name' => 'Abdoel Moeis',
+        ]);
+// id =15
+        Author::create([
+            'name' => 'Dr. M. Nurhakim, M.Ag',
+        ]);
 
 
         // id =1
@@ -122,7 +139,22 @@ class BooksSeeder extends Seeder
             'name' => 'Taylor & Francis Inc.',
             'address' => 'Milton Park, Abingdon-on-Thames, Oxfordshire Britania Raya'
         ]);
+<<<<<<< HEAD
+// id =9
+        Publisher::create([
+            'name' => 'Paramadina',
+            'address' => 'Pondok Indah Plaza III Blok F IV-VI Jl. TB Simatupang Jakarta Selatan'
+        ]);
+// id =10
+        Publisher::create([
+            'name' => 'Universitas Muhammadiyah Malang',
+            'address' => 'Jl. Raya Tlogomas No.246, Malang, Jawa Timur'
+        ]);
+
+// book
+=======
         // book
+>>>>>>> 3839fc5fc768a47cf150b10c4851b05917f8e4cf
         $book = Book::create([
             'book_code' => Category::firstWhere('id', '=', 4)->first('category_code')->category_code . '-' . Str::upper(Str::random(5)),
             'isbn' => '9786024125189',
@@ -383,6 +415,82 @@ class BooksSeeder extends Seeder
             'category_id' => 4,
             'author_id' => 12,
             'publisher_id' => 8,
+        ]);
+        Stock::create([
+            'stock' => $book->amount,
+            'book_id' => $book->id
+        ]);
+
+        $book = Book::create([
+            'book_code' => Str::upper(Str::random(8)),
+            'isbn' => '9798321057',
+            'title' => 'Islam Agama Peradaban',
+            'title_description' => 'Membangun Makna dan Relevansi Doktrin Islam Dalam Sejarah',
+            'edition' => '1',
+            'publication_year' => '1995',
+            'published_at' => 'Jakarta',
+            'exemplar' =>'326',
+            'amount' => 50,
+            'category_id' => 6,
+            'author_id' => 13,
+            'publisher_id' => 9,
+        ]);
+        Stock::create([
+            'stock' => $book->amount,
+            'book_id' => $book->id
+        ]);
+
+        $book = Book::create([
+            'book_code' => Str::upper(Str::random(8)),
+            'isbn' => '9794180637',
+            'title' => 'Di Bawah Lindungan Kabah',
+            'title_description' => '',
+            'edition' => '1',
+            'publication_year' => '1988',
+            'published_at' => 'Jakarta',
+            'exemplar' =>'813',
+            'amount' => 60,
+            'category_id' => 5,
+            'author_id' => 4,
+            'publisher_id' => 3,
+        ]);
+        Stock::create([
+            'stock' => $book->amount,
+            'book_id' => $book->id
+        ]);
+
+        $book = Book::create([
+            'book_code' => Str::upper(Str::random(8)),
+            'isbn' => '9794071102',
+            'title' => 'Salah Asuhan',
+            'title_description' => '',
+            'edition' => '1',
+            'publication_year' => '2013',
+            'published_at' => 'Jakarta',
+            'exemplar' =>'144',
+            'amount' => 45,
+            'category_id' => 5,
+            'author_id' => 14,
+            'publisher_id' => 3,
+        ]);
+        Stock::create([
+            'stock' => $book->amount,
+            'book_id' => $book->id
+        ]);
+
+        $book = Book::create([
+            'book_code' => Str::upper(Str::random(8)),
+            'isbn' => '9789797966492',
+            'title' => 'Metodologi Studi Islam',
+            'title_description' => '',
+            'edition' => '1',
+            'publication_year' => '2021',
+            'published_at' => 'Malang',
+            'exemplar' =>'280',
+            'amount' => 30,
+            'category_id' => 6,
+            'author_id' => 15,
+            'publisher_id' => 10,
         ]);
         Stock::create([
             'stock' => $book->amount,
