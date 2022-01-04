@@ -14,9 +14,8 @@ Project ini dibuat untuk mendigitalisasi proses peminjaman buku di SMK Telkom Pe
 
 Prasyarat :
 
--   php
+-   php (XAMPP)
 -   composer
--   npm(NodeJS)
 
 Langkah-langkah :
 
@@ -36,12 +35,10 @@ Langkah-langkah :
 
     ```
     composer install
-    npm install
-    npm run dev
     ```
 
 1. Copy file .env.example, lalu ganti nama menjadi .env saja
-1. Buat database baru pada mysql, berikut commandnya jika melalui commandline atau terminal
+1. Buat database baru pada mysql atau dbms lain, berikut commandnya jika melalui commandline atau terminal
 
     ```
     mysql -u root
@@ -63,3 +60,7 @@ Langkah-langkah :
 
     email = `x@x.com`
     password = `x`
+
+### Library yang digunakan
+
+1. [TailwindCSS](https://tailwindcss.com/) - Styling UI
